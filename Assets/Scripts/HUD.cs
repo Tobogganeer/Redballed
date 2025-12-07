@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HUD : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class HUD : MonoBehaviour
 
     public TMPro.TMP_Text redBallCounter;
     public GameObject packageSprite;
+    public GameObject socialMedia;
 
     int redBalls;
 
@@ -20,6 +22,7 @@ public class HUD : MonoBehaviour
     {
         packageSprite.SetActive(false);
         redBallCounter.text = "0";
+        socialMedia.SetActive(false);
     }
 
     public static void IncreaseRedBalls()
@@ -36,5 +39,11 @@ public class HUD : MonoBehaviour
     public static void HidePackage()
     {
         instance.packageSprite.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current.eKey.wasPressedThisFrame)
+            socialMedia.SetActive(!socialMedia.activeSelf);
     }
 }
