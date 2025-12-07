@@ -25,7 +25,11 @@ public class HUD : MonoBehaviour
     public static int Time
     {
         get => instance.time;
-        set => instance.time = value;
+        set
+        {
+            instance.time = value;
+            instance.SetTimeText();
+        }
     }
 
     private void Start()
@@ -56,6 +60,13 @@ public class HUD : MonoBehaviour
         instance.deliveriesLeftText.text = $"Left today: {left}";
     }
 
+    void SetTimeText()
+    {
+        int seconds = time % 60;
+        int minutes = time / 60;
+        timeText.text = $"{16 + minutes}:{seconds:00}";
+    }
+
     private void Update()
     {
         if (Keyboard.current.eKey.wasPressedThisFrame)
@@ -64,12 +75,8 @@ public class HUD : MonoBehaviour
         timer += UnityEngine.Time.deltaTime;
         if (timer >= 1f)
         {
-            time++;
+            Time++;
             timer = 0f;
-
-            int seconds = time % 60;
-            int minutes = time / 60;
-            timeText.text = $"{16 + minutes}:{seconds:00}";
         }
     }
 }
