@@ -1,20 +1,21 @@
 using UnityEngine;
 
-public class DialogueSpawner : Pickup
+public class DialogueSpawner : MonoBehaviour, IStompable
 {
-    public void Show()
-    {
+    public GameObject dialogue;
 
+    private void Start()
+    {
+        dialogue.SetActive(false);
     }
 
-    public void Hide()
+    public void PlayerLanded(PlayerController player)
     {
-
+        dialogue.SetActive(true);
     }
 
-    protected override bool OnPickedUp()
+    public void PlayerLeft(PlayerController player)
     {
-        Show();
-        return false;
+        dialogue.SetActive(false);
     }
 }
