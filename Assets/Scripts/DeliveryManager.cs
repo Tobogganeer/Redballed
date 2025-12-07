@@ -35,10 +35,13 @@ public class DeliveryManager : MonoBehaviour
         instance.deliveredPackage = true;
         instance.deliveryPointHighlight.SetActive(false);
         HUD.HidePackage();
+        HUD.SetPackagesLeftToday(0);
     }
 
     public static void SecondDayLoaded()
     {
         instance.deliveredPackage = false;
+        HUD.SetPackagesLeftToday(1);
+        HUD.SetTime(0);
     }
 }

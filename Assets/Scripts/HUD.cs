@@ -14,9 +14,13 @@ public class HUD : MonoBehaviour
     public TMPro.TMP_Text redBallCounter;
     public GameObject packageSprite;
     public GameObject socialMedia;
+    public TMPro.TMP_Text timeText;
+    public TMPro.TMP_Text deliveriesLeftText;
 
     int redBalls;
+    int time;
 
+    float timer;
 
     private void Start()
     {
@@ -41,9 +45,30 @@ public class HUD : MonoBehaviour
         instance.packageSprite.SetActive(false);
     }
 
+    public static void SetPackagesLeftToday(int left)
+    {
+        instance.deliveriesLeftText.text = $"Left today: {left}";
+    }
+
+    public static void SetTime(int seconds)
+    {
+
+    }
+
     private void Update()
     {
         if (Keyboard.current.eKey.wasPressedThisFrame)
             socialMedia.SetActive(!socialMedia.activeSelf);
+
+        timer += Time.deltaTime;
+        if (timer >= 1f)
+        {
+            time++;
+            timer = 0f;
+
+            int seconds = time % 60;
+            int minutes = time / 60;
+            timeText.text = $"{16 + minutes}:{seconds:00}";
+        }
     }
 }

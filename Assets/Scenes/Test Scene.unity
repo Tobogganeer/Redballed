@@ -8126,7 +8126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1320273230
 Transform:
   m_ObjectHideFlags: 0
@@ -8466,6 +8466,8 @@ MonoBehaviour:
   redBallCounter: {fileID: 353557839}
   packageSprite: {fileID: 1066636211}
   socialMedia: {fileID: 343359421}
+  timeText: {fileID: 1930962250}
+  deliveriesLeftText: {fileID: 2062061880}
 --- !u!1 &1411813745
 GameObject:
   m_ObjectHideFlags: 0

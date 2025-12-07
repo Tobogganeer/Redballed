@@ -14,13 +14,14 @@ public class Home : Pickup
     {
         if (DeliveryManager.DeliveredPackage)
         {
-            day1.SetActive(false);
-            day2.SetActive(true);
             // Teleport up into the black "loading" screen
             player.transform.position += Vector3.up * 15;
             cam.transform.position += Vector3.up * 15;
 
             DeliveryManager.SecondDayLoaded();
+
+            day1.SetActive(false);
+            day2.SetActive(true);
 
             return true;
         }
