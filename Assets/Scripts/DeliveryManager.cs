@@ -10,8 +10,10 @@ public class DeliveryManager : MonoBehaviour
     }
 
     bool hasPackage;
+    bool deliveredPackage;
 
     public static bool HasPackage => instance.hasPackage;
+    public static bool DeliveredPackage => instance.deliveredPackage;
 
     public static void OnPackagePickedUp()
     {
