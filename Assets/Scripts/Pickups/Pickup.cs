@@ -8,10 +8,15 @@ public abstract class Pickup : MonoBehaviour
     {
         if (collision.CompareTag(PlayerTag))
         {
-            OnPickedUp();
-            Destroy(gameObject);
+            bool shouldDestroy = OnPickedUp();
+            if (shouldDestroy)
+                Destroy(gameObject);
         }
     }
 
-    protected abstract void OnPickedUp();
+    /// <summary>
+    /// Called when the player runs over this object. Return whether the object should be destroyed.
+    /// </summary>
+    /// <returns></returns>
+    protected abstract bool OnPickedUp();
 }

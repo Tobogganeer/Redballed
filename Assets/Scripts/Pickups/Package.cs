@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Package : Pickup
 {
-    protected override void OnPickedUp()
+    protected override bool OnPickedUp()
     {
         DeliveryManager.OnPackagePickedUp();
+        return true;
     }
 }

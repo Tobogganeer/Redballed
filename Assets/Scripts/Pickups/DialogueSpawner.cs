@@ -2,15 +2,19 @@ using UnityEngine;
 
 public class DialogueSpawner : Pickup
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Show()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Hide()
     {
-        
+
+    }
+
+    protected override bool OnPickedUp()
+    {
+        Show();
+        return false;
     }
 }
