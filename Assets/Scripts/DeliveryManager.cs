@@ -36,4 +36,9 @@ public class DeliveryManager : MonoBehaviour
         instance.deliveryPointHighlight.SetActive(false);
         HUD.HidePackage();
     }
+
+    public static void SecondDayLoaded()
+    {
+        instance.deliveredPackage = false;
+    }
 }
