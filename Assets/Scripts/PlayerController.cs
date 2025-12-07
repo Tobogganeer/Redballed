@@ -5,6 +5,12 @@ using System;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+
     #region Enums
     public enum FacingDirection
     {
