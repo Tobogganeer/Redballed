@@ -9,6 +9,7 @@ public class Spike : Pickup
 
         Checkpoint cp = Checkpoint.Current;
         PlayerController.instance.transform.position = cp.transform.position;
+        HUD.Time += 10;
 
         return false;
     }

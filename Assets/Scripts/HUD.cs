@@ -22,6 +22,12 @@ public class HUD : MonoBehaviour
 
     float timer;
 
+    public static int Time
+    {
+        get => instance.time;
+        set => instance.time = value;
+    }
+
     private void Start()
     {
         packageSprite.SetActive(false);
@@ -50,17 +56,12 @@ public class HUD : MonoBehaviour
         instance.deliveriesLeftText.text = $"Left today: {left}";
     }
 
-    public static void SetTime(int seconds)
-    {
-
-    }
-
     private void Update()
     {
         if (Keyboard.current.eKey.wasPressedThisFrame)
             socialMedia.SetActive(!socialMedia.activeSelf);
 
-        timer += Time.deltaTime;
+        timer += UnityEngine.Time.deltaTime;
         if (timer >= 1f)
         {
             time++;

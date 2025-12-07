@@ -42,6 +42,6 @@ public class DeliveryManager : MonoBehaviour
     {
         instance.deliveredPackage = false;
         HUD.SetPackagesLeftToday(1);
-        HUD.SetTime(0);
+        HUD.Time = 0;
     }
 }
