@@ -4,14 +4,10 @@ public class DeliveryPoint : Pickup
 {
     protected override bool OnPickedUp()
     {
-        // If we have a package, deliver it and destroy ourselves
+        // If we have a package, deliver it
         if (DeliveryManager.HasPackage)
-        {
             DeliveryManager.OnPackageDelivered();
-            return true;
-        }
 
-        // If we have no package, do nothing
         return false;
     }
 }
