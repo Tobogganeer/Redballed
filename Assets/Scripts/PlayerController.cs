@@ -332,7 +332,9 @@ public class PlayerController : MonoBehaviour
         Vector2 origin = (Vector2)transform.position + collider.offset;
         Vector2 size = collider.size + Vector2.one * collider.edgeRadius;
         // Cast it
+        Physics2D.queriesHitTriggers = false;
         RaycastHit2D hit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, groundCheckDistance, groundLayermask);
+        Physics2D.queriesHitTriggers = true;
 
         if (hit)
         {
