@@ -583,6 +583,7 @@ GameObject:
   - component: {fileID: 1148512224}
   - component: {fileID: 1148512223}
   - component: {fileID: 1148512222}
+  - component: {fileID: 1148512226}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -692,6 +693,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148512220}
   m_CullTransparentMesh: 1
+--- !u!114 &1148512226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148512220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 229b616593e56414db77b6be36f59377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  givingHandImage: {fileID: 1760580528}
+  playButtonImages:
+  - {fileID: 4776010380603227924, guid: 6b55176d4ecb12741bfe488b175512b7, type: 3}
+  - {fileID: -1904407917917621369, guid: 0ce671789c8f1864eafe5a2ee21f89de, type: 3}
+  - {fileID: -8418065183887432379, guid: a354b1d5140352043b1900b194ad1d61, type: 3}
 --- !u!1 &1179676564
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,6 +722,7 @@ GameObject:
   - component: {fileID: 1179676568}
   - component: {fileID: 1179676567}
   - component: {fileID: 1179676566}
+  - component: {fileID: 1179676570}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -813,6 +832,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179676564}
   m_CullTransparentMesh: 1
+--- !u!114 &1179676570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179676564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48027e678c1bd084095a49431dfc0ebd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointingImage: {fileID: 20054060}
+  quitButtonImages:
+  - {fileID: -3783646819187398832, guid: 536ec444eff4abf4fbdae71644dd67b5, type: 3}
+  - {fileID: 7491114240835899029, guid: 3f527ad9e73966949a1e242da4d5043f, type: 3}
+  - {fileID: 2640352661210958664, guid: 25a50dc511a44fe4f99fb3856fd1b1a8, type: 3}
 --- !u!1 &1708270056
 GameObject:
   m_ObjectHideFlags: 0
