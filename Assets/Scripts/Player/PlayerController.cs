@@ -1,16 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
 
 public class PlayerController : MonoBehaviour
 {
-    public static PlayerController instance;
-    private void Awake()
-    {
-        instance = this;
-    }
-
     #region Enums
     public enum FacingDirection
     {
@@ -96,6 +89,10 @@ public class PlayerController : MonoBehaviour
     #region Properties
     public Rigidbody2D RB => rb;
     public Vector2 ExtraVelocity { get; set; } // Used for moving platforms
+    public Vector2 PlayerInput => playerInput;
+    public Vector2 ActualVelocity => actualVelocity;
+    public bool Grounded => grounded;
+    public FacingDirection Facing => direction;
     #endregion
 
     #region Private Variables
@@ -145,9 +142,6 @@ public class PlayerController : MonoBehaviour
     float snapshotTimer;
     #endregion
 
-
-    // Essentially an epsilion angle
-    const float MinVelocityForWalkingAnim = 0.01f;
 
     void Start()
     {
@@ -464,31 +458,6 @@ public class PlayerController : MonoBehaviour
         actualVelocity = (lastPosition - rb.position) / Time.deltaTime;
         lastPosition = rb.position;
     }
-
-    #region Animation
-    public bool IsWalking()
-    {
-        // Make sure we are trying to move and not up against a wall
-        bool tryingToMove = playerInput.x != 0f;
-        bool actuallyMoving = Mathf.Abs(actualVelocity.x) > MinVelocityForWalkingAnim;
-        return tryingToMove && actuallyMoving;
-    }
-    public bool IsGrounded()
-    {
-        return grounded;
-    }
-
-    public FacingDirection GetFacingDirection()
-    {
-        return direction;
-    }
-
-    // We are never dead (for now)
-    public bool IsDead()
-    {
-        return false;
-    }
-    #endregion
 
     #region Gizmos
     private void OnDrawGizmos()
