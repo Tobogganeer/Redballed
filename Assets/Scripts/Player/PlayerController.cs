@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Tobo.Audio;
 
 public class PlayerController : MonoBehaviour
 {
@@ -260,6 +261,8 @@ public class PlayerController : MonoBehaviour
 
             float velocity = airTime < coyoteTime ? initialJumpVelocity : airJumpVelocity;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, velocity);
+            Sound.Jump.PlayDirect(); // TODO: Double jump sound
+            //Sound.Jump.Override().SetVolume(0.5f).Pl
 
             // If air jump, increment
             if (canAirJump && !canGroundJump)
@@ -295,6 +298,8 @@ public class PlayerController : MonoBehaviour
             currentDashSpeed = dashDistance / dashTime;
             // UpdateGrounded() doesn't touch this if we are dashing
             hasTouchedGroundSinceDashing = false;
+
+            Sound.Dash.PlayDirect();
         }
     }
 
@@ -355,6 +360,10 @@ public class PlayerController : MonoBehaviour
                 float scaledAirTime = Mathf.Clamp(airTime, 0.3f, 3f) * landingCameraShake;
                 // Variable intensity, but always a short duration
                 CameraController.Shake(scaledAirTime, 0.3f);
+
+                // Play land sound if we are moving down
+                if (rb.linearVelocityY < 0f || airTime > 1f)
+                    Sound.Land.Override().SetVolume(Mathf.Clamp01(airTime * 0.5f)).Play();
             }
 
             // See if what we landed on is stompable
