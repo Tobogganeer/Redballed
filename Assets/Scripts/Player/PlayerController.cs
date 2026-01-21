@@ -279,6 +279,7 @@ public class PlayerController : MonoBehaviour
         {
             float sign = dashDirection == FacingDirection.Left ? -1f : 1f;
             rb.linearVelocity = new Vector2(sign * currentDashSpeed, 0f);
+            desiredXVelocity = rb.linearVelocityX;
             dashTimer += Time.deltaTime;
             if (dashTimer > dashTime)
                 dashing = false;
