@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 5676371996593916306}
   - component: {fileID: 1679774897521690202}
   - component: {fileID: 4874747981234721884}
+  - component: {fileID: 3988311140578098951}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -185,8 +186,7 @@ MonoBehaviour:
   apexHeight: 3.2
   apexTime: 0.5
   terminalSpeed: 10
-  allowAirJumps: 1
-  airJumpApexHeight: 2.5
+  doubleJumpApexHeight: 2
   enableVariableJumpHeight: 1
   variableJumpMode: 0
   variableJumpExtraGravity: 30
@@ -197,10 +197,9 @@ MonoBehaviour:
   maxStepHeight: 0.3
   maxStepDistance: 0.3
   growBackTime: 0.3
-  enableDash: 1
   dashKey: 304
-  dashDistance: 3
-  dashTime: 0.3
+  dashDistance: 1
+  dashTime: 0.15
   capturesPerSecond: 30
   secondsCaptured: 3
   drawGizmos: 0
@@ -343,3 +342,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00f5bbbb3e4bea4ab103475b07c7720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  current: 0
+--- !u!114 &3988311140578098951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7452944952522510544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ade3557733ffb7c4195fe1427b41c937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepSpeed: 0.75
