@@ -1635,7 +1635,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1433354315}
-  tilemap: {fileID: 1054579208}
   offset: {x: 0, y: 0}
   followCamera: {fileID: 519420031}
   followSmoothing: 5
@@ -11976,7 +11975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 432469797354259325, guid: 09549191d3eda4442b3321485b1b69ba, type: 3}
       propertyPath: dashDistance
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4073802608967933600, guid: 09549191d3eda4442b3321485b1b69ba, type: 3}
       propertyPath: m_LocalPosition.x
