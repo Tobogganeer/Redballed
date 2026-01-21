@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     public float terminalSpeed = 3f;
     [Space]
     public float doubleJumpApexHeight = 2f;
+    public ParticleSystem jumpParticles;
 
     [Space]
     public bool enableVariableJumpHeight;
@@ -261,6 +262,8 @@ public class PlayerController : MonoBehaviour
 
             float velocity = airTime < coyoteTime ? initialJumpVelocity : airJumpVelocity;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, velocity);
+
+            jumpParticles.Play(); // TODO: Double jump particles
             Sound.Jump.PlayDirect(); // TODO: Double jump sound
             //Sound.Jump.Override().SetVolume(0.5f).Pl
 
@@ -300,6 +303,7 @@ public class PlayerController : MonoBehaviour
             hasTouchedGroundSinceDashing = false;
 
             Sound.Dash.PlayDirect();
+            // TODO: Dash particles
         }
     }
 
@@ -363,7 +367,10 @@ public class PlayerController : MonoBehaviour
 
                 // Play land sound if we are moving down
                 if (rb.linearVelocityY < 0f || airTime > 1f)
+                {
                     Sound.Land.Override().SetVolume(Mathf.Clamp01(airTime * 0.5f)).Play();
+                    jumpParticles.Play();
+                }
             }
 
             // See if what we landed on is stompable
