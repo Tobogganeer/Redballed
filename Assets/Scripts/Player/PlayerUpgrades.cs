@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerUpgrades : MonoBehaviour
 {
+    [SerializeField]
     Upgrades current;
 
     public Upgrades Current => current;

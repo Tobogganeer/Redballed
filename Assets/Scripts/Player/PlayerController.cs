@@ -46,8 +46,8 @@ public class PlayerController : MonoBehaviour
     public float apexHeight = 3.2f; // Units
     public float apexTime = 1f; // Seconds to reach apex height
     public float terminalSpeed = 3f;
-    public bool allowAirJumps = false;
-    public float airJumpApexHeight = 2f;
+    [Space]
+    public float doubleJumpApexHeight = 2f;
 
     [Space]
     public bool enableVariableJumpHeight;
@@ -70,7 +70,6 @@ public class PlayerController : MonoBehaviour
     public float growBackTime = 0.3f; // Seconds
 
     [Header("Dash")]
-    public bool enableDash = true;
     public KeyCode dashKey = KeyCode.LeftShift;
     public float dashDistance = 3f;
     public float dashTime = 1f;
@@ -157,7 +156,7 @@ public class PlayerController : MonoBehaviour
         initialJumpVelocity = 2f * apexHeight / apexTime;
 
         // TODO: This isn't correct right now (fix gravity calculation?)
-        airJumpVelocity = 2f * airJumpApexHeight / apexTime;
+        airJumpVelocity = 2f * doubleJumpApexHeight / apexTime;
 
         baseColliderSize = collider.size;
         baseColliderOffset = collider.offset;
@@ -171,6 +170,7 @@ public class PlayerController : MonoBehaviour
         playerInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         TryDash();
+        UpdateGrounded();
         if (!dashing)
         {
             MovementUpdate(playerInput);
@@ -185,8 +185,6 @@ public class PlayerController : MonoBehaviour
         // Update facing direction only if we are currently inputting
         if (playerInput.x < 0f) direction = FacingDirection.Left;
         else if (playerInput.x > 0f) direction = FacingDirection.Right;
-
-        UpdateGrounded();
 
         // Physically accurate & correct usage of lerp
         // TODO: Test out SmoothDamp or MoveTowards? Map those velocity curves?
@@ -254,7 +252,7 @@ public class PlayerController : MonoBehaviour
         // If grounded and pressing space, jump
         //if (grounded && Input.GetKeyDown(KeyCode.Space))
         bool canGroundJump = airTime < coyoteTime;
-        bool canAirJump = allowAirJumps && numAirJumps < 1;
+        bool canAirJump = Player.Upgrades.Has(Upgrades.DoubleJump) && numAirJumps == 0;
         bool pressingJump = timeSinceJumpPressed < jumpBufferingTime;
         if ((canGroundJump || canAirJump) && pressingJump)
         {
@@ -271,7 +269,7 @@ public class PlayerController : MonoBehaviour
 
     private void TryDash()
     {
-        if (!enableDash)
+        if (!Player.Upgrades.Has(Upgrades.Dash))
         {
             dashing = false;
             return;
@@ -285,20 +283,17 @@ public class PlayerController : MonoBehaviour
             if (dashTimer > dashTime)
                 dashing = false;
         }
-        else
+        else if (Input.GetKeyDown(dashKey) && hasTouchedGroundSinceDashing)
         {
-            if (Input.GetKeyDown(dashKey) && hasTouchedGroundSinceDashing)
-            {
-                dashing = true;
-                dashDirection = direction;
-                dashTimer = 0f;
+            dashing = true;
+            dashDirection = direction;
+            dashTimer = 0f;
 
-                // Store now, we will apply after in whatever direction we are going
-                //horizontalVelocityBeforeDash = Mathf.Abs(rb.linearVelocityX);
-                currentDashSpeed = dashDistance / dashTime;
-                // We don't check ground state when dashing, so we know this won't be reset while dashing
-                hasTouchedGroundSinceDashing = false;
-            }
+            // Store now, we will apply after in whatever direction we are going
+            //horizontalVelocityBeforeDash = Mathf.Abs(rb.linearVelocityX);
+            currentDashSpeed = dashDistance / dashTime;
+            // UpdateGrounded() doesn't touch this if we are dashing
+            hasTouchedGroundSinceDashing = false;
         }
     }
 
@@ -347,7 +342,7 @@ public class PlayerController : MonoBehaviour
             // Grounded if angle is less than a high number like 80
             grounded = angle < maxGroundAngle;
 
-            if (grounded)
+            if (grounded && !dashing)
             {
                 numAirJumps = 0;
                 hasTouchedGroundSinceDashing = true;
