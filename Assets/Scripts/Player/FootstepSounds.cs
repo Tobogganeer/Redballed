@@ -18,8 +18,9 @@ public class FootstepSounds : MonoBehaviour
     {
         if (Player.Movement.Grounded)
         {
-            // TODO: Handle moving platforms
-            distanceTravelled += Mathf.Abs((Player.Position.x - lastPosition) - Player.Movement.ExtraVelocity.x * Time.deltaTime);
+            float delta = Player.Position.x - lastPosition;
+            delta -= Player.Movement.ExtraVelocity.x * Time.deltaTime; // Handle moving platforms
+            distanceTravelled += Mathf.Abs(delta);
 
             if (distanceTravelled > 1f / footstepSpeed)
             {
