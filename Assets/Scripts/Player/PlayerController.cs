@@ -1,7 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
 using Tobo.Audio;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -157,8 +158,10 @@ public class PlayerController : MonoBehaviour
         gravity = -2f * apexHeight / (apexTime * apexTime);
         initialJumpVelocity = 2f * apexHeight / apexTime;
 
-        // TODO: This isn't correct right now (fix gravity calculation?)
-        airJumpVelocity = 2f * doubleJumpApexHeight / apexTime;
+        // Account for difference in gravity between jump and double jump
+        // (different apex heights means we need more force for smaller jumps)
+        float quotient = apexHeight / doubleJumpApexHeight;
+        airJumpVelocity = 2f * Mathf.Sqrt(quotient) * doubleJumpApexHeight / apexTime;
 
         baseColliderSize = collider.size;
         baseColliderOffset = collider.offset;
@@ -287,7 +290,25 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(sign * currentDashSpeed, 0f);
             desiredXVelocity = rb.linearVelocityX;
             dashTimer += Time.deltaTime;
-            if (dashTimer > dashTime)
+
+            // Check if we are hitting a wall
+            bool hitTriggers = Physics2D.queriesHitTriggers;
+            RaycastHit2D hit;
+
+            {
+                Physics2D.queriesHitTriggers = false;
+
+                // Check if there is a step in front of us
+                Vector2 direction = facingDirection;
+                const float Distance = 0.05f;
+
+                hit = Physics2D.BoxCast(transform.position, collider.size, 0f,
+                    direction, Distance, groundLayermask);
+
+                Physics2D.queriesHitTriggers = hitTriggers;
+            }
+
+            if (dashTimer > dashTime || hit)
                 dashing = false;
         }
         else if (Input.GetKeyDown(dashKey) && hasTouchedGroundSinceDashing)
@@ -423,20 +444,40 @@ public class PlayerController : MonoBehaviour
 
         float checkDistance = maxStepDistance + edgeRadius; // How far sideways we need to check
 
-        // Check if there is a step in front of us
-        RaycastHit2D stepHit = Physics2D.BoxCast(position + stepDetectOffset, stepDetectSize, 0f,
-            checkDirection, checkDistance, groundLayermask);
+        // No overload for BoxCast that takes a ContactFilter and returns a single result
+        //ContactFilter2D filter = new ContactFilter2D();
+        //filter.SetLayerMask(groundLayermask);
+        //filter.useTriggers = false;
+
+        bool hitTriggers = Physics2D.queriesHitTriggers;
+        RaycastHit2D hit;
+
+        {
+            Physics2D.queriesHitTriggers = false;
+
+            // Check if there is a step in front of us
+            hit = Physics2D.BoxCast(position + stepDetectOffset, stepDetectSize, 0f,
+                checkDirection, checkDistance, groundLayermask);
+
+            Physics2D.queriesHitTriggers = hitTriggers;
+        } 
 
         // If no step, stop here
-        if (!stepHit)
+        if (!hit)
             return;
 
-        // Check if there is room above the step
-        RaycastHit2D objectInOurFutureHome = Physics2D.BoxCast(position + baseColliderOffset + Vector2.up * maxStepHeight,
-            baseColliderSize + Vector2.up * edgeRadius * 2f, 0f, checkDirection, checkDistance, groundLayermask);
+        {
+            Physics2D.queriesHitTriggers = false;
+
+            // Check if there is room above the step
+            hit = Physics2D.BoxCast(position + baseColliderOffset + Vector2.up * maxStepHeight,
+                baseColliderSize + Vector2.up * edgeRadius * 2f, 0f, checkDirection, checkDistance, groundLayermask);
+
+            Physics2D.queriesHitTriggers = hitTriggers;
+        }
 
         // Aw :(
-        if (objectInOurFutureHome)
+        if (hit)
             return;
 
         // There is a step and room for us - shrink us down!

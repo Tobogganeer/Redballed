@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Spike : Pickup
+public class Spike : Trigger
 {
-    protected override bool OnPickedUp()
+    protected override void OnPlayerEnter()
     {
         if (!Checkpoint.Exists)
             throw new System.NullReferenceException("No checkpoint to restore to!");
@@ -10,7 +10,5 @@ public class Spike : Pickup
         Checkpoint cp = Checkpoint.Current;
         //PlayerController.instance.transform.position = cp.transform.position;
         HUD.Time += 10;
-
-        return false;
     }
 }
