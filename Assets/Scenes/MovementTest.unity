@@ -9238,6 +9238,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 432469797354259325, guid: 09549191d3eda4442b3321485b1b69ba, type: 3}
+      propertyPath: drawMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 432469797354259325, guid: 09549191d3eda4442b3321485b1b69ba, type: 3}
+      propertyPath: drawGizmos
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 432469797354259325, guid: 09549191d3eda4442b3321485b1b69ba, type: 3}
+      propertyPath: dashDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 432469797354259325, guid: 09549191d3eda4442b3321485b1b69ba, type: 3}
+      propertyPath: airAcceleration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 432469797354259325, guid: 09549191d3eda4442b3321485b1b69ba, type: 3}
+      propertyPath: doubleJumpApexHeight
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4073802608967933600, guid: 09549191d3eda4442b3321485b1b69ba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.69

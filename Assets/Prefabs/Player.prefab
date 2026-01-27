@@ -221,7 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   acceleration: 10
-  airAcceleration: 2
+  airAcceleration: 10
   enableSnapTurning: 1
   allowSnapTurningInAir: 0
   snapTurningMode: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
   apexHeight: 3.2
   apexTime: 0.5
   terminalSpeed: 10
-  doubleJumpApexHeight: 2
+  doubleJumpApexHeight: 3
   jumpParticles: {fileID: 3286688609507078201}
   enableVariableJumpHeight: 1
   variableJumpMode: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   maxStepDistance: 0.3
   growBackTime: 0.3
   dashKey: 304
-  dashDistance: 1
+  dashDistance: 2
   dashTime: 0.15
   capturesPerSecond: 30
   secondsCaptured: 3
