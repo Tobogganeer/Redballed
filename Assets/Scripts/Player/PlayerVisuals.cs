@@ -23,7 +23,7 @@ public class PlayerVisuals : MonoBehaviour
     public bool IsWalking()
     {
         // Make sure we are trying to move and not up against a wall
-        bool tryingToMove = playerController.PlayerInput.x != 0f;
+        bool tryingToMove = playerController.PlayerInput != 0f;
         bool actuallyMoving = Mathf.Abs(playerController.ActualVelocity.x) > MinVelocityForWalkingAnim;
         return tryingToMove && actuallyMoving;
     }
