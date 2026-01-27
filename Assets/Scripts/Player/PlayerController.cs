@@ -158,8 +158,10 @@ public class PlayerController : MonoBehaviour
         gravity = -2f * apexHeight / (apexTime * apexTime);
         initialJumpVelocity = 2f * apexHeight / apexTime;
 
-        // TODO: This isn't correct right now (fix gravity calculation?)
-        airJumpVelocity = 2f * doubleJumpApexHeight / apexTime;
+        // Account for difference in gravity between jump and double jump
+        // (different apex heights means we need more force for smaller jumps)
+        float quotient = apexHeight / doubleJumpApexHeight;
+        airJumpVelocity = 2f * Mathf.Sqrt(quotient) * doubleJumpApexHeight / apexTime;
 
         baseColliderSize = collider.size;
         baseColliderOffset = collider.offset;
