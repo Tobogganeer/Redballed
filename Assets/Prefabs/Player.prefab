@@ -234,7 +234,7 @@ MonoBehaviour:
   apexHeight: 3.2
   apexTime: 0.5
   terminalSpeed: 10
-  doubleJumpApexHeight: 3
+  doubleJumpApexHeight: 2
   jumpParticles: {fileID: 3286688609507078201}
   enableVariableJumpHeight: 1
   variableJumpMode: 0
@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00f5bbbb3e4bea4ab103475b07c7720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current: 0
+  current: -1
 --- !u!1001 &4188831412564183158
 PrefabInstance:
   m_ObjectHideFlags: 0
