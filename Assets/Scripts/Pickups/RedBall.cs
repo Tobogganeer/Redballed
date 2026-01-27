@@ -7,7 +7,8 @@ public class RedBall : Pickup
 
     protected override void OnPickedUp()
     {
-        Sound.Pickup.PlayDirect();
         HUD.IncreaseRedBalls();
+        Sound.Pickup.PlayDirect();
+        FX.SpawnParticles(ParticleType.RedBall, transform.position);
     }
 }
