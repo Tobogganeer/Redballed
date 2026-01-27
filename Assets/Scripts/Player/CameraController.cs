@@ -28,7 +28,8 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 playerVelocity = Player.Movement.ActualVelocity;
+        //Vector3 playerVelocity = Player.Movement.ActualVelocity;
+        Vector3 playerVelocity = Player.Movement.Facing == PlayerController.FacingDirection.Right ? Vector3.left : Vector3.right;
         playerVelocity *= velocityPrediction;
         playerVelocity.x = Mathf.Clamp(playerVelocity.x, -maxVelocityPrediction.x, maxVelocityPrediction.x);
         playerVelocity.y = Mathf.Clamp(playerVelocity.y, -maxVelocityPrediction.y, maxVelocityPrediction.y);
