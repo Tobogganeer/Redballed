@@ -1,7 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
 using Tobo.Audio;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -287,7 +288,25 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(sign * currentDashSpeed, 0f);
             desiredXVelocity = rb.linearVelocityX;
             dashTimer += Time.deltaTime;
-            if (dashTimer > dashTime)
+
+            // Check if we are hitting a wall
+            bool hitTriggers = Physics2D.queriesHitTriggers;
+            RaycastHit2D hit;
+
+            {
+                Physics2D.queriesHitTriggers = false;
+
+                // Check if there is a step in front of us
+                Vector2 direction = facingDirection;
+                const float Distance = 0.05f;
+
+                hit = Physics2D.BoxCast(transform.position, collider.size, 0f,
+                    direction, Distance, groundLayermask);
+
+                Physics2D.queriesHitTriggers = hitTriggers;
+            }
+
+            if (dashTimer > dashTime || hit)
                 dashing = false;
         }
         else if (Input.GetKeyDown(dashKey) && hasTouchedGroundSinceDashing)
