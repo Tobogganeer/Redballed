@@ -423,20 +423,40 @@ public class PlayerController : MonoBehaviour
 
         float checkDistance = maxStepDistance + edgeRadius; // How far sideways we need to check
 
-        // Check if there is a step in front of us
-        RaycastHit2D stepHit = Physics2D.BoxCast(position + stepDetectOffset, stepDetectSize, 0f,
-            checkDirection, checkDistance, groundLayermask);
+        // No overload for BoxCast that takes a ContactFilter and returns a single result
+        //ContactFilter2D filter = new ContactFilter2D();
+        //filter.SetLayerMask(groundLayermask);
+        //filter.useTriggers = false;
+
+        bool hitTriggers = Physics2D.queriesHitTriggers;
+        RaycastHit2D hit;
+
+        {
+            Physics2D.queriesHitTriggers = false;
+
+            // Check if there is a step in front of us
+            hit = Physics2D.BoxCast(position + stepDetectOffset, stepDetectSize, 0f,
+                checkDirection, checkDistance, groundLayermask);
+
+            Physics2D.queriesHitTriggers = hitTriggers;
+        } 
 
         // If no step, stop here
-        if (!stepHit)
+        if (!hit)
             return;
 
-        // Check if there is room above the step
-        RaycastHit2D objectInOurFutureHome = Physics2D.BoxCast(position + baseColliderOffset + Vector2.up * maxStepHeight,
-            baseColliderSize + Vector2.up * edgeRadius * 2f, 0f, checkDirection, checkDistance, groundLayermask);
+        {
+            Physics2D.queriesHitTriggers = false;
+
+            // Check if there is room above the step
+            hit = Physics2D.BoxCast(position + baseColliderOffset + Vector2.up * maxStepHeight,
+                baseColliderSize + Vector2.up * edgeRadius * 2f, 0f, checkDirection, checkDistance, groundLayermask);
+
+            Physics2D.queriesHitTriggers = hitTriggers;
+        }
 
         // Aw :(
-        if (objectInOurFutureHome)
+        if (hit)
             return;
 
         // There is a step and room for us - shrink us down!
