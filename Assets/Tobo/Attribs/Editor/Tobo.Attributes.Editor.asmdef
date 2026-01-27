@@ -1,0 +1,18 @@
+{
+    "name": "Tobo.Attributes.Editor",
+    "rootNamespace": "Tobo.Attributes.Editor",
+    "references": [
+        "GUID:adc2e0741c6a95e428856f56c6864ff5"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
