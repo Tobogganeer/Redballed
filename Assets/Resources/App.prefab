@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 1724299063169364109}
   - component: {fileID: 820419789284792215}
   - component: {fileID: 5618853504182038298}
+  - component: {fileID: 4784703828453071660}
   m_Layer: 0
   m_Name: App
   m_TagString: Untagged
@@ -250,6 +251,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75e47f0e4bd1a354b8de4a390922a810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4784703828453071660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4248689779089318806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d5bcecdd5747947bb486356cba9e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRedBalls: 0
 --- !u!1 &5367811422728072156
 GameObject:
   m_ObjectHideFlags: 0

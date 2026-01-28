@@ -20,4 +20,10 @@ public class World : MonoBehaviour
         instance.currentRedBalls += num;
         OnRedBallCollected?.Invoke(CurrentRedBalls);
     }
+
+    public static void ResetRedBalls()
+    {
+        instance.currentRedBalls = 0;
+        OnRedBallCollected?.Invoke(CurrentRedBalls);
+    }
 }
