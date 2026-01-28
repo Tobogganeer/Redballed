@@ -15,7 +15,7 @@ public class World : MonoBehaviour
 
     public static event Action<int> OnRedBallCollected;
 
-    public static void AddRedBalls(int num)
+    public static void AddRedBall(int num = 1)
     {
         instance.currentRedBalls += num;
         OnRedBallCollected?.Invoke(CurrentRedBalls);
