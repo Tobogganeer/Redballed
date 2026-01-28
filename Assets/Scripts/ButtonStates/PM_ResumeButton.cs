@@ -41,4 +41,15 @@ public class PM_ResumeButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
         ((IPointerExitHandler)resumeButton).OnPointerExit(eventData);
     }
+
+    public void ResumePlay()
+    {
+        // If there is a canvas component inside the resume button's parent object, hide the entire pause menu canvas
+        if (GetComponentInParent<Canvas>() != null)
+        {
+            GetComponentInParent<Canvas>().gameObject.SetActive(false);
+
+            Time.timeScale = 1.0f; // Unpause the game
+        }
+    }
 }

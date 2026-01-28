@@ -46,4 +46,9 @@ public class MM_QuitButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         ((IPointerExitHandler)quitButton).OnPointerExit(eventData);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
