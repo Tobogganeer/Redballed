@@ -18,6 +18,7 @@ namespace Tobo.Audio
             Dash = 23363657,
             Jump = 23561445,
             Land = 23601826,
+            Pickup = 1328105843,
             RedBallPickup = -1094163979,
             Step = 23828355,
         }
@@ -25,6 +26,7 @@ namespace Tobo.Audio
         public static Sound Dash => Get(ID.Dash);
         public static Sound Jump => Get(ID.Jump);
         public static Sound Land => Get(ID.Land);
+        public static Sound Pickup => Get(ID.Pickup);
         public static Sound RedBallPickup => Get(ID.RedBallPickup);
         public static Sound Step => Get(ID.Step);
 
@@ -38,6 +40,7 @@ namespace Tobo.Audio
             { "Dash", Sound.ID.Dash },
             { "Jump", Sound.ID.Jump },
             { "Land", Sound.ID.Land },
+            { "Pickup", Sound.ID.Pickup },
             { "RedBallPickup", Sound.ID.RedBallPickup },
             { "Step", Sound.ID.Step },
         };
