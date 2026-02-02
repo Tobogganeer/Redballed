@@ -1,22 +1,15 @@
 using UnityEngine;
 
-public abstract class Pickup : MonoBehaviour
+public abstract class Pickup : Trigger
 {
-    readonly string PlayerTag = "Player";
+    protected abstract bool DestroyedOnPickup { get; }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnPlayerEnter()
     {
-        if (collision.CompareTag(PlayerTag))
-        {
-            bool shouldDestroy = OnPickedUp();
-            if (shouldDestroy)
-                Destroy(gameObject);
-        }
+        OnPickedUp();
+        if (DestroyedOnPickup)
+            Destroy(gameObject);
     }
 
-    /// <summary>
-    /// Called when the player runs over this object. Return whether the object should be destroyed.
-    /// </summary>
-    /// <returns></returns>
-    protected abstract bool OnPickedUp();
+    protected abstract void OnPickedUp();
 }

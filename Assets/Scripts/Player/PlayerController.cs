@@ -1,7 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
 using Tobo.Audio;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour
     #region Properties
     public Rigidbody2D RB => rb;
     public Vector2 ExtraVelocity { get; set; } // Used for moving platforms
-    public Vector2 PlayerInput => playerInput;
+    public float PlayerInput => playerInput;
     public Vector2 ActualVelocity => actualVelocity;
     public bool Grounded => grounded;
     public FacingDirection Facing => direction;
@@ -113,7 +114,7 @@ public class PlayerController : MonoBehaviour
     FacingDirection direction;
     Vector2 facingDirection => direction == FacingDirection.Left ? Vector2.left : Vector2.right;
     float desiredXVelocity;
-    Vector2 playerInput;
+    float playerInput;
 
     Vector2 lastPosition;
     Vector2 actualVelocity;
@@ -157,8 +158,10 @@ public class PlayerController : MonoBehaviour
         gravity = -2f * apexHeight / (apexTime * apexTime);
         initialJumpVelocity = 2f * apexHeight / apexTime;
 
-        // TODO: This isn't correct right now (fix gravity calculation?)
-        airJumpVelocity = 2f * doubleJumpApexHeight / apexTime;
+        // Account for difference in gravity between jump and double jump
+        // (different apex heights means we need more force for smaller jumps)
+        float quotient = apexHeight / doubleJumpApexHeight;
+        airJumpVelocity = 2f * Mathf.Sqrt(quotient) * doubleJumpApexHeight / apexTime;
 
         baseColliderSize = collider.size;
         baseColliderOffset = collider.offset;
@@ -169,7 +172,7 @@ public class PlayerController : MonoBehaviour
     {
         //The input from the player needs to be determined and then passed in the to the MovementUpdate which should
         //manage the actual movement of the character.
-        playerInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        playerInput = PlayerInputs.Movement;
 
         TryDash();
         UpdateGrounded();
@@ -182,11 +185,11 @@ public class PlayerController : MonoBehaviour
         CaptureSnapshots();
     }
 
-    private void MovementUpdate(Vector2 playerInput)
+    private void MovementUpdate(float playerInput)
     {
         // Update facing direction only if we are currently inputting
-        if (playerInput.x < 0f) direction = FacingDirection.Left;
-        else if (playerInput.x > 0f) direction = FacingDirection.Right;
+        if (playerInput < 0f) direction = FacingDirection.Left;
+        else if (playerInput > 0f) direction = FacingDirection.Right;
 
         // Physically accurate & correct usage of lerp
         // TODO: Test out SmoothDamp or MoveTowards? Map those velocity curves?
@@ -194,7 +197,7 @@ public class PlayerController : MonoBehaviour
         // Returns null if we should instantaneously snap-turn (go to 0 x velocity)
         float? currentAcceleration = CalculateAcceleration();
         if (currentAcceleration.HasValue)
-            desiredXVelocity = Mathf.Lerp(desiredXVelocity, playerInput.x * speed, Time.deltaTime * currentAcceleration.Value);
+            desiredXVelocity = Mathf.Lerp(desiredXVelocity, playerInput * speed, Time.deltaTime * currentAcceleration.Value);
         else
             desiredXVelocity = 0f;
 
@@ -218,9 +221,9 @@ public class PlayerController : MonoBehaviour
             float localRBXVelocity = rb.linearVelocity.x - ExtraVelocity.x;
 
             // Make sure we are trying to move and actually moving in opposite directions
-            bool tryingToMove = playerInput.x != 0;
+            bool tryingToMove = playerInput != 0;
             bool actuallyMoving = localRBXVelocity != 0;
-            bool inputDirOppositeToVelocity = Mathf.Sign(localRBXVelocity) != Mathf.Sign(playerInput.x);
+            bool inputDirOppositeToVelocity = Mathf.Sign(localRBXVelocity) != Mathf.Sign(playerInput);
             // Don't allow snap-turning in air if the option is left off
             bool validGroundedStateToSnapTurn = grounded || allowSnapTurningInAir;
             bool shouldSnapTurn = tryingToMove && actuallyMoving && inputDirOppositeToVelocity && validGroundedStateToSnapTurn;
@@ -241,7 +244,7 @@ public class PlayerController : MonoBehaviour
         timeSinceJumpPressed += Time.deltaTime;
 
         // Reset the timer if we press space
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (PlayerInputs.Jump.WasPressedThisFrame())
             timeSinceJumpPressed = 0f;
 
         // Add normal gravity, modified by whether or not we are holding space
@@ -287,10 +290,28 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(sign * currentDashSpeed, 0f);
             desiredXVelocity = rb.linearVelocityX;
             dashTimer += Time.deltaTime;
-            if (dashTimer > dashTime)
+
+            // Check if we are hitting a wall
+            bool hitTriggers = Physics2D.queriesHitTriggers;
+            RaycastHit2D hit;
+
+            {
+                Physics2D.queriesHitTriggers = false;
+
+                // Check if there is a step in front of us
+                Vector2 direction = facingDirection;
+                const float Distance = 0.05f;
+
+                hit = Physics2D.BoxCast(transform.position, collider.size, 0f,
+                    direction, Distance, groundLayermask);
+
+                Physics2D.queriesHitTriggers = hitTriggers;
+            }
+
+            if (dashTimer > dashTime || hit)
                 dashing = false;
         }
-        else if (Input.GetKeyDown(dashKey) && hasTouchedGroundSinceDashing)
+        else if (PlayerInputs.Dash.WasPressedThisFrame() && hasTouchedGroundSinceDashing)
         {
             dashing = true;
             dashDirection = direction;
@@ -316,13 +337,13 @@ public class PlayerController : MonoBehaviour
         if (variableJumpMode == VariableJumpGravityMode.ConstantApexTime)
         {
             // If we are going up and no longer holding jump, fall faster
-            bool fallFaster =  !Input.GetKey(KeyCode.Space) && rb.linearVelocity.y > 0f;
+            bool fallFaster =  !PlayerInputs.Jump.IsPressed() && rb.linearVelocity.y > 0f;
             return fallFaster ? -variableJumpExtraGravity : 0f;
         }
         else
         {
             // If we are going up and holding space, reduce gravity
-            bool decreaseGravity = Input.GetKey(KeyCode.Space) && rb.linearVelocity.y > 0f;
+            bool decreaseGravity = PlayerInputs.Jump.IsPressed() && rb.linearVelocity.y > 0f;
             // We want to make sure we aren't "boosting" the max jump height,
             //  so instead of giving less gravity, just take more away
             // (Hard to explain but the functionality is different from the other mode)
@@ -412,7 +433,7 @@ public class PlayerController : MonoBehaviour
 
         // Make sure we want to check for step ups (falling down and sideways)
         // We can check for equality in collider size because MoveTowards will make them equal
-        bool moving = rb.linearVelocity.x != 0 || playerInput.x != 0;
+        bool moving = rb.linearVelocity.x != 0 || playerInput != 0;
         bool originalSize = collider.size.y == baseColliderSize.y;
         if (!enableStepUp || !moving || !originalSize || grounded)
             return;
@@ -423,20 +444,40 @@ public class PlayerController : MonoBehaviour
 
         float checkDistance = maxStepDistance + edgeRadius; // How far sideways we need to check
 
-        // Check if there is a step in front of us
-        RaycastHit2D stepHit = Physics2D.BoxCast(position + stepDetectOffset, stepDetectSize, 0f,
-            checkDirection, checkDistance, groundLayermask);
+        // No overload for BoxCast that takes a ContactFilter and returns a single result
+        //ContactFilter2D filter = new ContactFilter2D();
+        //filter.SetLayerMask(groundLayermask);
+        //filter.useTriggers = false;
+
+        bool hitTriggers = Physics2D.queriesHitTriggers;
+        RaycastHit2D hit;
+
+        {
+            Physics2D.queriesHitTriggers = false;
+
+            // Check if there is a step in front of us
+            hit = Physics2D.BoxCast(position + stepDetectOffset, stepDetectSize, 0f,
+                checkDirection, checkDistance, groundLayermask);
+
+            Physics2D.queriesHitTriggers = hitTriggers;
+        } 
 
         // If no step, stop here
-        if (!stepHit)
+        if (!hit)
             return;
 
-        // Check if there is room above the step
-        RaycastHit2D objectInOurFutureHome = Physics2D.BoxCast(position + baseColliderOffset + Vector2.up * maxStepHeight,
-            baseColliderSize + Vector2.up * edgeRadius * 2f, 0f, checkDirection, checkDistance, groundLayermask);
+        {
+            Physics2D.queriesHitTriggers = false;
+
+            // Check if there is room above the step
+            hit = Physics2D.BoxCast(position + baseColliderOffset + Vector2.up * maxStepHeight,
+                baseColliderSize + Vector2.up * edgeRadius * 2f, 0f, checkDirection, checkDistance, groundLayermask);
+
+            Physics2D.queriesHitTriggers = hitTriggers;
+        }
 
         // Aw :(
-        if (objectInOurFutureHome)
+        if (hit)
             return;
 
         // There is a step and room for us - shrink us down!
@@ -536,12 +577,12 @@ public class PlayerController : MonoBehaviour
         {
             position = player.transform.position;
             velocity = player.rb.linearVelocity; // May not be perfectly accurate?
-            xInput = player.playerInput.x;
+            xInput = player.playerInput;
             isInCoyoteTime = player.airTime < player.coyoteTime;
             grounded = player.grounded;
             jumpIsBuffered = player.timeSinceJumpPressed < player.jumpBufferingTime;
             time = Time.time;
-            holdingJump = Input.GetKey(KeyCode.Space);
+            holdingJump = PlayerInputs.Jump.IsPressed();
             currentColliderSize = player.collider.size;
             currentColliderOffset = player.collider.offset;
         }

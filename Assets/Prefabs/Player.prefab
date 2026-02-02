@@ -221,7 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   acceleration: 10
-  airAcceleration: 2
+  airAcceleration: 10
   enableSnapTurning: 1
   allowSnapTurningInAir: 0
   snapTurningMode: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   maxStepDistance: 0.3
   growBackTime: 0.3
   dashKey: 304
-  dashDistance: 1
+  dashDistance: 2
   dashTime: 0.15
   capturesPerSecond: 30
   secondsCaptured: 3
@@ -325,7 +325,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.045466065}
+  m_Offset: {x: 0, y: -0.16}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -335,7 +335,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1.0909321}
+  m_Size: {x: 0.89, y: 0.89}
   m_EdgeRadius: 0.05
 --- !u!50 &5676371996593916306
 Rigidbody2D:
@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00f5bbbb3e4bea4ab103475b07c7720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current: 0
+  current: -1
 --- !u!1001 &4188831412564183158
 PrefabInstance:
   m_ObjectHideFlags: 0

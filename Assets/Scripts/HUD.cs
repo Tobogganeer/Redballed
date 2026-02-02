@@ -41,8 +41,8 @@ public class HUD : MonoBehaviour
 
     public static void IncreaseRedBalls()
     {
-        instance.redBalls++;
-        instance.redBallCounter.text = instance.redBalls.ToString();
+        //instance.redBalls++;
+        //instance.redBallCounter.text = instance.redBalls.ToString();
     }
 
     public static void ShowPackage()
