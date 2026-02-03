@@ -10,8 +10,10 @@ public class World : MonoBehaviour
     }
 
     [SerializeField] int currentRedBalls;
+    [SerializeField] DayManager days;
 
     public static int CurrentRedBalls => instance.currentRedBalls;
+    public static DayManager Days => instance.days;
 
     public static event Action<int> OnRedBallCollected;
 
