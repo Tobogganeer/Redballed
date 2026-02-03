@@ -25,6 +25,7 @@ public class DayManager : MonoBehaviour
 
     public Day CurrentDay => CurrentDay;
     public static event Action<Day> OnDayLoaded;
+    public static event Action<Day> BeforeDayUnloaded;
 
 
     private void Awake()
@@ -45,6 +46,10 @@ public class DayManager : MonoBehaviour
         StartLoadingDay(currentDay);
     }
 
+    /// <summary>
+    /// Starts loading the <paramref name="day"/>. Calls <see cref="OnDayLoaded"/> when complete.
+    /// </summary>
+    /// <param name="day">The day to load</param>
     public void StartLoadingDay(Day day)
     {
         if (!days.TryGetValue(day, out BuildIndex buildIndex))
@@ -59,7 +64,10 @@ public class DayManager : MonoBehaviour
     private IEnumerator LoadDayScene(Day day, BuildIndex scene)
     {
         if (currentlyLoadedDay > 0)
+        {
+            BeforeDayUnloaded?.Invoke(currentDay);
             yield return SceneManager.UnloadSceneAsync(currentlyLoadedDay);
+        }
 
         yield return SceneManager.LoadSceneAsync(scene);
 
