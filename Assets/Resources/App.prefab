@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 820419789284792215}
   - component: {fileID: 5618853504182038298}
   - component: {fileID: 4784703828453071660}
+  - component: {fileID: 8538671392222787227}
   m_Layer: 0
   m_Name: App
   m_TagString: Untagged
@@ -264,6 +265,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRedBalls: 0
+  days: {fileID: 0}
+--- !u!114 &8538671392222787227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4248689779089318806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7aa648133696a4448643539e10fd16a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dayScenes: []
+  currentDay: 1
 --- !u!1 &5367811422728072156
 GameObject:
   m_ObjectHideFlags: 0

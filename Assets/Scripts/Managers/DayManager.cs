@@ -1,7 +1,10 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Tobo.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using BuildIndex = System.Int32;
 
 public enum Day
 {
@@ -17,20 +20,52 @@ public class DayManager : MonoBehaviour
     [SerializeField] private List<DayScene> dayScenes;
     [SerializeField] private Day currentDay = Day.DayOne;
 
-    public Day CurrentDay => CurrentDay;
+    Dictionary<Day, BuildIndex> days;
+    BuildIndex currentlyLoadedDay;
 
-    Dictionary<Day, string> days;
+    public Day CurrentDay => CurrentDay;
+    public static event Action<Day> OnDayLoaded;
+
 
     private void Awake()
     {
-        days = new Dictionary<Day, string>();
-        foreach (DayScene scene in dayScenes)
-            days.Add(scene.day, scene.scene);
+        days = new Dictionary<Day, BuildIndex>();
+        foreach (DayScene dayScene in dayScenes)
+        {
+            Scene scene = SceneManager.GetSceneByName(dayScene.scene);
+            if (!scene.IsValid())
+                throw new System.NullReferenceException($"Day scene for day {dayScene.day} is null or invalid!");
+
+            days.Add(dayScene.day, scene.buildIndex);
+        }
     }
 
     private void Start()
     {
-        //SceneManager.LoadSceneAsync(0, LoadSceneParameters)
+        StartLoadingDay(currentDay);
+    }
+
+    public void StartLoadingDay(Day day)
+    {
+        if (!days.TryGetValue(day, out BuildIndex buildIndex))
+        {
+            Debug.LogError($"Could not find day scene for day {day}");
+            return;
+        }
+
+        LoadDayScene(day, buildIndex);
+    }
+
+    private IEnumerator LoadDayScene(Day day, BuildIndex scene)
+    {
+        if (currentlyLoadedDay > 0)
+            yield return SceneManager.UnloadSceneAsync(currentlyLoadedDay);
+
+        yield return SceneManager.LoadSceneAsync(scene);
+
+        currentlyLoadedDay = scene;
+        currentDay = day;
+        OnDayLoaded?.Invoke(day);
     }
 
 }
