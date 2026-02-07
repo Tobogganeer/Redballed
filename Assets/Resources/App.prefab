@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRedBalls: 0
-  days: {fileID: 0}
+  days: {fileID: 8538671392222787227}
 --- !u!114 &8538671392222787227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +278,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7aa648133696a4448643539e10fd16a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayScenes: []
+  baseScene: GameScene
+  dayScenes:
+  - day: 1
+    scene: Day1_Additive
+  - day: 1
+    scene: Day2_Additive
+  - day: 3
+    scene: Day3_Additive
+  - day: 4
+    scene: Ending_Additive
   currentDay: 1
 --- !u!1 &5367811422728072156
 GameObject:

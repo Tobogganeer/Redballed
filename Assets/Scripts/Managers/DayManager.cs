@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using Tobo.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,25 +22,29 @@ public class DayManager : MonoBehaviour
     [SerializeField] private List<DayScene> dayScenes;
     [SerializeField] private Day currentDay = Day.DayOne;
 
-    Dictionary<Day, BuildIndex> days;
+    Dictionary<Day, string> days;
     Scene loadedDay;
     Scene loadedBaseScene; // To see if we need to load it
 
     public Day CurrentDay => currentDay;
     public static event Action<Day> OnDayLoaded;
     public static event Action<Day> BeforeDayUnloaded;
+    public static event Action<Day> OnDayEnded;
+
+    public static bool Loading { get; private set; }
 
 
     private void Awake()
     {
-        days = new Dictionary<Day, BuildIndex>();
+        days = new Dictionary<Day, string>();
         foreach (DayScene dayScene in dayScenes)
         {
-            Scene scene = SceneManager.GetSceneByName(dayScene.scene);
-            if (!scene.IsValid())
-                throw new System.NullReferenceException($"Day scene for day {dayScene.day} is null or invalid!");
+            //Scene scene = SceneManager.GetSceneByName(dayScene.scene);
+            //if (!scene.IsValid())
+            //    throw new System.NullReferenceException($"Day scene for day {dayScene.day} is null or invalid!");
 
-            days.Add(dayScene.day, scene.buildIndex);
+            // The Scene attribute makes sure the given scene is valid
+            days.Add(dayScene.day, dayScene.scene);
         }
     }
 
@@ -56,6 +60,8 @@ public class DayManager : MonoBehaviour
     /// </summary>
     public IEnumerator EndDay()
     {
+        Loading = true;
+
         // Unload the current day
         if (loadedDay.isLoaded)
         {
@@ -69,6 +75,10 @@ public class DayManager : MonoBehaviour
         // Reset
         loadedDay = new Scene();
         loadedBaseScene = new Scene();
+
+        Loading = false;
+
+        OnDayEnded?.Invoke(currentDay);
     }
 
     /// <summary>
@@ -77,17 +87,19 @@ public class DayManager : MonoBehaviour
     /// <param name="day">The day to load</param>
     public IEnumerator StartLoadingDay(Day day)
     {
-        if (!days.TryGetValue(day, out BuildIndex buildIndex))
+        if (!days.TryGetValue(day, out string scene))
         {
             Debug.LogError($"Could not find day scene for day {day}");
             yield break;
         }
 
-        yield return LoadDayScene(day, buildIndex);
+        yield return LoadDayScene(day, scene);
     }
 
-    private IEnumerator LoadDayScene(Day day, BuildIndex scene)
+    private IEnumerator LoadDayScene(Day day, string scene)
     {
+        Loading = true;
+
         // Unload the current day
         if (loadedDay.isLoaded)
         {
@@ -107,8 +119,11 @@ public class DayManager : MonoBehaviour
         yield return SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
 
         //currentlyLoadedDay = scene;
-        loadedDay = SceneManager.GetSceneAt(scene);
+        loadedDay = SceneManager.GetSceneByName(scene);
         currentDay = day;
+
+        Loading = false;
+
         OnDayLoaded?.Invoke(day);
     }
 
@@ -125,4 +140,10 @@ public struct DayScene
     public Day day;
     [Scene]
     public string scene;
+}
+
+public static class DayExtensions
+{
+    public static Day GetNextDay(this Day day) => (Day)Mathf.Min((int)day + 1, (int)Day.EndingDay);
+    public static Day GetPreviousDay(this Day day) => (Day)Mathf.Max((int)day - 1, (int)Day.DayOne);
 }

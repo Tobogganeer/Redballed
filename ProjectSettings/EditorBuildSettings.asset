@@ -11,6 +11,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 2452cf541d248f642979eac573559233
+  - enabled: 1
+    path: Assets/Scenes/Day1_Additive.unity
+    guid: 75f5132db25f9084f92faf2783c23113
+  - enabled: 1
+    path: Assets/Scenes/Day2_Additive.unity
+    guid: 1997dfca3dbfa5e45a5a71de9f1b6914
+  - enabled: 1
+    path: Assets/Scenes/Day3_Additive.unity
+    guid: fa17f7ec19dd63a48a52524a73de18db
+  - enabled: 1
+    path: Assets/Scenes/Ending_Additive.unity
+    guid: 62318f3b4c42ae445aa4618fa38b93f3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 13b1ace79c6f29c44b721f33f7f3ab0e, type: 3}
   m_UseUCBPForAssetBundles: 0
