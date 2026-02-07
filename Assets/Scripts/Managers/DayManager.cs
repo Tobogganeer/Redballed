@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Tobo.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,13 +18,15 @@ public enum Day
 
 public class DayManager : MonoBehaviour
 {
+    [SerializeField, Scene] private string baseScene;
     [SerializeField] private List<DayScene> dayScenes;
     [SerializeField] private Day currentDay = Day.DayOne;
 
     Dictionary<Day, BuildIndex> days;
-    BuildIndex currentlyLoadedDay;
+    Scene loadedDay;
+    Scene loadedBaseScene; // To see if we need to load it
 
-    public Day CurrentDay => CurrentDay;
+    public Day CurrentDay => currentDay;
     public static event Action<Day> OnDayLoaded;
     public static event Action<Day> BeforeDayUnloaded;
 
@@ -41,44 +44,82 @@ public class DayManager : MonoBehaviour
         }
     }
 
+    /*
     private void Start()
     {
         StartLoadingDay(currentDay);
+    }
+    */
+
+    /// <summary>
+    /// Unloads the current day
+    /// </summary>
+    public IEnumerator EndDay()
+    {
+        // Unload the current day
+        if (loadedDay.isLoaded)
+        {
+            BeforeDayUnloaded?.Invoke(currentDay);
+            yield return SceneManager.UnloadSceneAsync(loadedDay);
+        }
+
+        if (loadedBaseScene.isLoaded)
+            yield return SceneManager.UnloadSceneAsync(loadedBaseScene);
+
+        // Reset
+        loadedDay = new Scene();
+        loadedBaseScene = new Scene();
     }
 
     /// <summary>
     /// Starts loading the <paramref name="day"/>. Calls <see cref="OnDayLoaded"/> when complete.
     /// </summary>
     /// <param name="day">The day to load</param>
-    public void StartLoadingDay(Day day)
+    public IEnumerator StartLoadingDay(Day day)
     {
         if (!days.TryGetValue(day, out BuildIndex buildIndex))
         {
             Debug.LogError($"Could not find day scene for day {day}");
-            return;
+            yield break;
         }
 
-        LoadDayScene(day, buildIndex);
+        yield return LoadDayScene(day, buildIndex);
     }
 
     private IEnumerator LoadDayScene(Day day, BuildIndex scene)
     {
-        if (currentlyLoadedDay > 0)
+        // Unload the current day
+        if (loadedDay.isLoaded)
         {
             BeforeDayUnloaded?.Invoke(currentDay);
-            yield return SceneManager.UnloadSceneAsync(currentlyLoadedDay);
+            yield return SceneManager.UnloadSceneAsync(loadedDay);
         }
 
-        yield return SceneManager.LoadSceneAsync(scene);
+        // Reload the base scene
+        if (loadedBaseScene.isLoaded)
+            yield return SceneManager.UnloadSceneAsync(loadedBaseScene);
 
-        currentlyLoadedDay = scene;
+        // Get callback to store base scene once loaded
+        SceneManager.sceneLoaded += OnBaseSceneLoaded;
+        yield return SceneManager.LoadSceneAsync(baseScene, LoadSceneMode.Single); // Load as main scene
+        SceneManager.sceneLoaded -= OnBaseSceneLoaded;
+
+        yield return SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+
+        //currentlyLoadedDay = scene;
+        loadedDay = SceneManager.GetSceneAt(scene);
         currentDay = day;
         OnDayLoaded?.Invoke(day);
     }
 
+    private void OnBaseSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        loadedBaseScene = scene;
+    }
+
 }
 
-[System.Serializable]
+[Serializable]
 public struct DayScene
 {
     public Day day;
