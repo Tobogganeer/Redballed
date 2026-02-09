@@ -13,7 +13,7 @@ public class World : MonoBehaviour
     [SerializeField] DayManager days;
 
     public static int CurrentRedBalls => instance.currentRedBalls;
-    public static DayManager Days => instance.days;
+    public static DayManager DayManager => instance.days;
 
     public static event Action<int> OnRedBallCollected;
 

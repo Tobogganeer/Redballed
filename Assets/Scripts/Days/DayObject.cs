@@ -1,11 +1,11 @@
 using UnityEngine;
 
 /// <summary>
-/// This object will only exist on the specified day
+/// This object will only exist on the specified days
 /// </summary>
 public class DayObject : MonoBehaviour
 {
-    public Day day;
+    public Days days;
 
     // TODO: Kill object before Start() etc is called
     private void OnEnable()
@@ -13,9 +13,9 @@ public class DayObject : MonoBehaviour
         DayManager.OnDayLoaded += DayLoaded;
     }
 
-    private void DayLoaded(Day loadedDay)
+    private void DayLoaded(Days loadedDay)
     {
-        if (day != loadedDay)
+        if (days.HasFlag(loadedDay))
             Destroy(gameObject);
     }
 

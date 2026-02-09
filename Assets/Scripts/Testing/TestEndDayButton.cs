@@ -4,6 +4,6 @@ public class TestEndDayButton : MonoBehaviour
 {
     public void EndDay()
     {
-        World.Days.EndDay();
+        World.DayManager.EndDay();
     }
 }

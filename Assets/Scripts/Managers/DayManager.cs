@@ -5,13 +5,14 @@ using Tobo.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum Day
+[Flags]
+public enum Days
 {
-    None,
-    DayOne,
-    DayTwo,
-    DayThree,
-    EndingDay
+    None = 0,
+    DayOne = 1 << 0,
+    DayTwo = 1 << 1,
+    DayThree = 1 << 2,
+    EndingDay = 1 << 3
 }
 
 public class DayManager : MonoBehaviour
@@ -19,17 +20,29 @@ public class DayManager : MonoBehaviour
     [SerializeField, Scene] private string baseScene;
     [SerializeField, Scene] private string interDayScene; // Upgrades
     [SerializeField] private List<DayScene> dayScenes;
-    [SerializeField] private Day currentDay = Day.DayOne;
+    [SerializeField] private Days currentDay = Days.DayOne;
 
-    Dictionary<Day, string> days;
+    Dictionary<Days, string> days;
     Scene loadedDay;
     //Scene loadedBaseScene; // To see if we need to load it
     //Scene loadedInterdayScene;
 
-    public Day CurrentDay => currentDay;
-    public static event Action<Day> OnDayLoaded;
-    public static event Action<Day> BeforeDayUnloaded;
-    public static event Action<Day> OnDayEnded;
+    public Days CurrentDay => currentDay;
+    /// <summary>
+    /// Called after the passed Day is loaded
+    /// </summary>
+    public static event Action<Days> OnDayLoaded;
+    /// <summary>
+    /// Called before the passed Day is unloaded
+    /// </summary>
+    public static event Action<Days> BeforeDayUnloaded;
+    /// <summary>
+    /// Called when the passed day is ended, before it is unloaded
+    /// </summary>
+    public static event Action<Days> OnDayEnded;
+    /// <summary>
+    /// Called after the interday scene (upgrades) is loaded
+    /// </summary>
     public static event Action OnInterdaySceneLoaded;
 
     public static bool Loading { get; private set; }
@@ -37,7 +50,7 @@ public class DayManager : MonoBehaviour
 
     private void Awake()
     {
-        days = new Dictionary<Day, string>();
+        days = new Dictionary<Days, string>();
         foreach (DayScene dayScene in dayScenes)
         {
             //Scene scene = SceneManager.GetSceneByName(dayScene.scene);
@@ -104,7 +117,7 @@ public class DayManager : MonoBehaviour
     /// Starts loading the <paramref name="day"/>. Calls <see cref="OnDayLoaded"/> when complete.
     /// </summary>
     /// <param name="day">The day to load</param>
-    public void LoadDay(Day day)
+    public void LoadDay(Days day)
     {
         if (!days.TryGetValue(day, out string scene))
         {
@@ -115,7 +128,7 @@ public class DayManager : MonoBehaviour
         StartCoroutine(LoadDayScene(day, scene));
     }
 
-    private IEnumerator LoadDayScene(Day day, string scene)
+    private IEnumerator LoadDayScene(Days day, string scene)
     {
         Loading = true;
         LoadingScreen.Enable();
@@ -166,13 +179,24 @@ public class DayManager : MonoBehaviour
 [Serializable]
 public struct DayScene
 {
-    public Day day;
+    public Days day;
     [Scene]
     public string scene;
 }
 
 public static class DayExtensions
 {
-    public static Day GetNextDay(this Day day) => (Day)Mathf.Min((int)day + 1, (int)Day.EndingDay);
-    public static Day GetPreviousDay(this Day day) => (Day)Mathf.Max((int)day - 1, (int)Day.DayOne);
+    public static Days GetNextDay(this Days day) => day switch
+    {
+        Days.None => Days.DayOne,
+        Days.DayOne => Days.DayTwo,
+        Days.DayTwo => Days.DayThree,
+        _ => Days.EndingDay,
+    };
+    public static Days GetPreviousDay(this Days day) => day switch
+    {
+        Days.EndingDay => Days.DayThree,
+        Days.DayThree => Days.DayTwo,
+        _ => Days.DayOne,
+    };
 }

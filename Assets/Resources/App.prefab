@@ -286,9 +286,9 @@ MonoBehaviour:
     scene: Day1_Additive
   - day: 2
     scene: Day2_Additive
-  - day: 3
-    scene: Day3_Additive
   - day: 4
+    scene: Day3_Additive
+  - day: 8
     scene: Ending_Additive
   currentDay: 1
 --- !u!114 &632364668807301018

@@ -4,6 +4,6 @@ public class TestNextDayButton : MonoBehaviour
 {
     public void LoadNextDay()
     {
-        World.Days.LoadDay(World.Days.CurrentDay.GetNextDay());
+        World.DayManager.LoadDay(World.DayManager.CurrentDay.GetNextDay());
     }
 }
