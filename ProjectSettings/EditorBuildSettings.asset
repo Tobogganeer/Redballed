@@ -23,6 +23,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Ending_Additive.unity
     guid: 62318f3b4c42ae445aa4618fa38b93f3
+  - enabled: 1
+    path: Assets/Scenes/UpgradeScene.unity
+    guid: 43090b9e5eb874f4584bd62b2377e8ff
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 062b1a5efdf58af46842238715296083
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 13b1ace79c6f29c44b721f33f7f3ab0e, type: 3}
   m_UseUCBPForAssetBundles: 0

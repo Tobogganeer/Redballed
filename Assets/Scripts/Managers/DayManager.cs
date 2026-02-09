@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Tobo.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using BuildIndex = System.Int32;
 
 public enum Day
 {
