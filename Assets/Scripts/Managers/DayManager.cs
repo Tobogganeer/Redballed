@@ -19,17 +19,20 @@ public enum Day
 public class DayManager : MonoBehaviour
 {
     [SerializeField, Scene] private string baseScene;
+    [SerializeField, Scene] private string interDayScene; // Upgrades
     [SerializeField] private List<DayScene> dayScenes;
     [SerializeField] private Day currentDay = Day.DayOne;
 
     Dictionary<Day, string> days;
     Scene loadedDay;
-    Scene loadedBaseScene; // To see if we need to load it
+    //Scene loadedBaseScene; // To see if we need to load it
+    //Scene loadedInterdayScene;
 
     public Day CurrentDay => currentDay;
     public static event Action<Day> OnDayLoaded;
     public static event Action<Day> BeforeDayUnloaded;
     public static event Action<Day> OnDayEnded;
+    public static event Action OnInterdaySceneLoaded;
 
     public static bool Loading { get; private set; }
 
@@ -56,29 +59,42 @@ public class DayManager : MonoBehaviour
     */
 
     /// <summary>
-    /// Unloads the current day
+    /// Unloads the current day and loads the inter-day scene (for upgrades)
     /// </summary>
     public IEnumerator EndDay()
     {
+        OnDayEnded?.Invoke(currentDay);
+
         Loading = true;
+        LoadingScreen.Enable();
 
         // Unload the current day
         if (loadedDay.isLoaded)
         {
             BeforeDayUnloaded?.Invoke(currentDay);
-            yield return SceneManager.UnloadSceneAsync(loadedDay);
+            //yield return SceneManager.UnloadSceneAsync(loadedDay);
         }
 
-        if (loadedBaseScene.isLoaded)
-            yield return SceneManager.UnloadSceneAsync(loadedBaseScene);
+        //if (loadedBaseScene.isLoaded)
+        //    yield return SceneManager.UnloadSceneAsync(loadedBaseScene);
+
+        //if (loadedInterdayScene.isLoaded)
+        //    yield return SceneManager.UnloadSceneAsync(loadedInterdayScene);
+
+        // Get callback to store inter-day scene once loaded
+        //SceneManager.sceneLoaded += InterdaySceneLoaded;
+        // This unloads all other scenes
+        yield return SceneManager.LoadSceneAsync(interDayScene);
+        //SceneManager.sceneLoaded -= InterdaySceneLoaded;
 
         // Reset
         loadedDay = new Scene();
-        loadedBaseScene = new Scene();
+        //loadedBaseScene = new Scene();
 
         Loading = false;
+        LoadingScreen.Disable();
 
-        OnDayEnded?.Invoke(currentDay);
+        OnInterdaySceneLoaded?.Invoke();
     }
 
     /// <summary>
@@ -99,22 +115,25 @@ public class DayManager : MonoBehaviour
     private IEnumerator LoadDayScene(Day day, string scene)
     {
         Loading = true;
+        LoadingScreen.Enable();
 
-        // Unload the current day
+        // Unload the current day (in normal gameplay, we won't have a day loaded)
         if (loadedDay.isLoaded)
         {
             BeforeDayUnloaded?.Invoke(currentDay);
-            yield return SceneManager.UnloadSceneAsync(loadedDay);
+            //yield return SceneManager.UnloadSceneAsync(loadedDay);
         }
 
         // Reload the base scene
-        if (loadedBaseScene.isLoaded)
-            yield return SceneManager.UnloadSceneAsync(loadedBaseScene);
+        // EDIT: Not needed; loading a 'single' scene unloads all other scenes
+        //if (loadedBaseScene.isLoaded)
+        //    yield return SceneManager.UnloadSceneAsync(loadedBaseScene);
 
         // Get callback to store base scene once loaded
-        SceneManager.sceneLoaded += OnBaseSceneLoaded;
+        //SceneManager.sceneLoaded += BaseSceneLoaded;
+        // Load base scene, which unloads other scenes (including inter-day scene)
         yield return SceneManager.LoadSceneAsync(baseScene, LoadSceneMode.Single); // Load as main scene
-        SceneManager.sceneLoaded -= OnBaseSceneLoaded;
+        //SceneManager.sceneLoaded -= BaseSceneLoaded;
 
         yield return SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
 
@@ -123,15 +142,22 @@ public class DayManager : MonoBehaviour
         currentDay = day;
 
         Loading = false;
+        LoadingScreen.Disable();
 
         OnDayLoaded?.Invoke(day);
     }
 
-    private void OnBaseSceneLoaded(Scene scene, LoadSceneMode mode)
+    /*
+    private void BaseSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         loadedBaseScene = scene;
     }
 
+    private void InterdaySceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        loadedInterdayScene = scene;
+    }
+    */
 }
 
 [Serializable]

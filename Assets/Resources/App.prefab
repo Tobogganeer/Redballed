@@ -282,7 +282,7 @@ MonoBehaviour:
   dayScenes:
   - day: 1
     scene: Day1_Additive
-  - day: 1
+  - day: 2
     scene: Day2_Additive
   - day: 3
     scene: Day3_Additive
