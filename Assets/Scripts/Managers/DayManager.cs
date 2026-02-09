@@ -59,7 +59,12 @@ public class DayManager : MonoBehaviour
     /// <summary>
     /// Unloads the current day and loads the inter-day scene (for upgrades)
     /// </summary>
-    public IEnumerator EndDay()
+    public void EndDay()
+    {
+        StartCoroutine(EndDayAndLoadInterdayScene());
+    }
+
+    private IEnumerator EndDayAndLoadInterdayScene()
     {
         OnDayEnded?.Invoke(currentDay);
 
@@ -99,15 +104,15 @@ public class DayManager : MonoBehaviour
     /// Starts loading the <paramref name="day"/>. Calls <see cref="OnDayLoaded"/> when complete.
     /// </summary>
     /// <param name="day">The day to load</param>
-    public IEnumerator StartLoadingDay(Day day)
+    public void LoadDay(Day day)
     {
         if (!days.TryGetValue(day, out string scene))
         {
             Debug.LogError($"Could not find day scene for day {day}");
-            yield break;
+            return;
         }
 
-        yield return LoadDayScene(day, scene);
+        StartCoroutine(LoadDayScene(day, scene));
     }
 
     private IEnumerator LoadDayScene(Day day, string scene)
