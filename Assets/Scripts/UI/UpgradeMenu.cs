@@ -15,8 +15,8 @@ public class UpgradeMenu : MonoBehaviour
     public GameObject dashLocked;
 
     [Space]
-    public int doubleJumpCost = 10;
-    public int dashCost = 20;
+    public Parameter doubleJumpCost;
+    public Parameter dashCost;
 
     private void Start()
     {
@@ -25,13 +25,13 @@ public class UpgradeMenu : MonoBehaviour
         nextDayText.text = World.DayManager.CurrentDay.GetNextDay().GetDayString();
 
         foreach (TMP_Text text in doubleJumpCostTexts)
-            text.text = doubleJumpCost.ToString();
+            text.text = doubleJumpCost.Value.ToString();
 
         foreach (TMP_Text text in dashCostTexts)
-            text.text = dashCost.ToString();
+            text.text = dashCost.Value.ToString();
 
-        bool hasDoubleJump = redBalls >= doubleJumpCost;
-        bool hasDash = redBalls >= dashCost;
+        bool hasDoubleJump = redBalls >= doubleJumpCost.Value;
+        bool hasDash = redBalls >= dashCost.Value;
 
         // Show proper UI depending on whether the upgrade is unlocked or not
         doubleJumpUnlocked.SetActive(hasDoubleJump);

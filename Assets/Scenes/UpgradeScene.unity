@@ -450,8 +450,8 @@ MonoBehaviour:
   doubleJumpLocked: {fileID: 224744013}
   dashUnlocked: {fileID: 385307415}
   dashLocked: {fileID: 907271185}
-  doubleJumpCost: 10
-  dashCost: 20
+  doubleJumpCost: {fileID: 11400000, guid: 1f537ff59b5e2b143be132aa84f08524, type: 2}
+  dashCost: {fileID: 11400000, guid: e2f83821abbd758448c159da4f123984, type: 2}
 --- !u!4 &306354347
 Transform:
   m_ObjectHideFlags: 0
