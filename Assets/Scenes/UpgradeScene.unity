@@ -267,6 +267,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3285086683006664876, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_text
+      value: Locked
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.59607846
+      objectReference: {fileID: 0}
     - target: {fileID: 5191926511488530293, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_fontColor.b
       value: 0.33361515
@@ -313,7 +333,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5676985625006941780, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 297.6955
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 5676985625006941780, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_LocalPosition.x
@@ -623,6 +643,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4293786347
+      objectReference: {fileID: 0}
     - target: {fileID: 5191926511488530293, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_fontColor.b
       value: 0.47140238
@@ -669,7 +705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5676985625006941780, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 297.6955
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 5676985625006941780, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1054,7 +1090,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Red Balls
+  m_text: 'Red Balls Today
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a7b0fd7b686871448cfef812a981916, type: 2}
   m_sharedMaterial: {fileID: 3264968369246965224, guid: 3a7b0fd7b686871448cfef812a981916, type: 2}
@@ -1322,6 +1360,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3285086683006664876, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_text
+      value: Locked
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.59607846
+      objectReference: {fileID: 0}
     - target: {fileID: 5191926511488530293, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_fontColor.b
       value: 0.33361515
@@ -1368,7 +1426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5676985625006941780, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 297.6955
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 5676985625006941780, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1706,7 +1764,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 1ae6f5cefab4bcb47b87dea7955561fe, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2021,6 +2079,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3756956019528346580, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4293786347
+      objectReference: {fileID: 0}
     - target: {fileID: 5191926511488530293, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_fontColor.b
       value: 0.47140238
@@ -2067,7 +2141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5676985625006941780, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 297.6955
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 5676985625006941780, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_LocalPosition.x
