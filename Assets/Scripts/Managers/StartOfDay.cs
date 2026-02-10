@@ -26,6 +26,9 @@ public class StartOfDay : MonoBehaviour
             Player.Upgrades.Give(Upgrades.Dash);
 
         World.ResetRedBalls();
+
+        Telemetry.Log("Day", day.ToString());
+        Telemetry.Log("Upgrades", Player.Upgrades.Current.ToString());
     }
 
     private void OnDisable()
