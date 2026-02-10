@@ -10,6 +10,7 @@ public class PlayerUpgrades : MonoBehaviour
     public bool Has(Upgrades upgrade) => current.HasFlag(upgrade);
     public void Give(Upgrades upgrade) => current |= upgrade;
     public void Remove(Upgrades upgrade) => current &= ~upgrade;
+    public void Reset() => current = Upgrades.None;
 }
 
 [System.Flags]

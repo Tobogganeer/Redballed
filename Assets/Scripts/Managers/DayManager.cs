@@ -199,4 +199,13 @@ public static class DayExtensions
         Days.DayThree => Days.DayTwo,
         _ => Days.DayOne,
     };
+
+    public static string GetDayString(this Days day) => day switch
+    {
+        Days.DayOne => "Day 1",
+        Days.DayTwo => "Day 2",
+        Days.DayThree => "Day 3",
+        Days.EndingDay => "Day 4",
+        _ => "Invalid Day",
+    };
 }
