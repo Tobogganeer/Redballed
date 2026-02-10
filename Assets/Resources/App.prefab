@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 8538671392222787227}
   - component: {fileID: 632364668807301018}
   - component: {fileID: 5520135330129147295}
+  - component: {fileID: 5686396483245872686}
   m_Layer: 0
   m_Name: App
   m_TagString: Untagged
@@ -319,6 +320,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doubleJumpCost: {fileID: 11400000, guid: 1f537ff59b5e2b143be132aa84f08524, type: 2}
   dashCost: {fileID: 11400000, guid: e2f83821abbd758448c159da4f123984, type: 2}
+--- !u!114 &5686396483245872686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4248689779089318806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91fb311d39c21f849869c4763f7a3a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStatesPerSecond: 10
 --- !u!1 &5367811422728072156
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,4 +16,5 @@ public class Player : MonoBehaviour
     public static PlayerVisuals Visuals => instance.visuals;
     public static PlayerUpgrades Upgrades => instance.upgrades;
     public static Vector3 Position => instance.transform.position; // TODO: rb.position?
+    public static bool Exists => instance != null;
 }
