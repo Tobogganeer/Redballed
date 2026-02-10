@@ -95,6 +95,8 @@ public class PlayerController : MonoBehaviour
     public Vector2 ActualVelocity => actualVelocity;
     public bool Grounded => grounded;
     public FacingDirection Facing => direction;
+
+    public Queue<Snapshot> Snapshots => snapshots;
     #endregion
 
     #region Private Variables
@@ -560,6 +562,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    [Serializable]
     public struct Snapshot
     {
         public Vector2 position;
