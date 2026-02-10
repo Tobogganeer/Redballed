@@ -9,6 +9,6 @@ public class Spike : Trigger
 
         Checkpoint cp = Checkpoint.Current;
         //PlayerController.instance.transform.position = cp.transform.position;
-        HUD.Time += 10;
+        //HUD.Time += 10;
     }
 }

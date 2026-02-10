@@ -13203,6 +13203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1231639085}
   - component: {fileID: 1231639086}
+  - component: {fileID: 1231639087}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -13255,6 +13256,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1231639087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231639084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daa970a3404341b4297272e119a71d53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doubleJumpIcon: {fileID: 910718599}
+  dashIcon: {fileID: 1980376520}
 --- !u!1 &1254062628
 GameObject:
   m_ObjectHideFlags: 0
