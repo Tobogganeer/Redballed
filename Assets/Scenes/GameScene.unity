@@ -13375,6 +13375,7 @@ MonoBehaviour:
   text: {fileID: 1781279617}
   background: {fileID: 1074951119}
   padding: {x: 0.4, y: 0.3}
+  minSize: {x: 0.1, y: 0.47}
 --- !u!212 &1074951119
 SpriteRenderer:
   m_ObjectHideFlags: 0
