@@ -6,14 +6,23 @@ public class HUD : MonoBehaviour
 {
     public GameObject doubleJumpIcon;
     public GameObject dashIcon;
+    public TMPro.TMP_Text redBallCount;
 
     private void OnEnable()
     {
         DayManager.OnDayLoaded += OnDayLoaded;
+        World.OnRedBallCollected += OnRedBallCollected;
 
         // Disable icons until the day starts
         doubleJumpIcon.SetActive(false);
         dashIcon.SetActive(false);
+
+        redBallCount.text = "0";
+    }
+
+    private void OnRedBallCollected(int num)
+    {
+        redBallCount.text = num.ToString();
     }
 
     private void OnDayLoaded(Days day)
@@ -33,5 +42,6 @@ public class HUD : MonoBehaviour
     private void OnDisable()
     {
         DayManager.OnDayLoaded -= OnDayLoaded;
+        World.OnRedBallCollected -= OnRedBallCollected;
     }
 }
