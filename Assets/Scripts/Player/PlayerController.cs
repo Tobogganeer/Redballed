@@ -146,6 +146,9 @@ public class PlayerController : MonoBehaviour
     float snapshotTimer;
     #endregion
 
+    public event Action OnJump;
+    public event Action OnDash;
+
 
     void Start()
     {
@@ -268,6 +271,8 @@ public class PlayerController : MonoBehaviour
             float velocity = airTime < coyoteTime ? initialJumpVelocity : airJumpVelocity;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, velocity);
 
+            // TODO: Make particles take from the event instead of being directly referenced here
+            OnJump?.Invoke();
             jumpParticles.Play(); // TODO: Double jump particles
             Sound.Jump.PlayDirect(); // TODO: Double jump sound
             //Sound.Jump.Override().SetVolume(0.5f).Pl
@@ -325,6 +330,8 @@ public class PlayerController : MonoBehaviour
             // UpdateGrounded() doesn't touch this if we are dashing
             hasTouchedGroundSinceDashing = false;
 
+            // TODO: Make sound take from event rather than being directly referenced
+            OnDash?.Invoke();
             Sound.Dash.PlayDirect();
             // TODO: Dash particles
         }

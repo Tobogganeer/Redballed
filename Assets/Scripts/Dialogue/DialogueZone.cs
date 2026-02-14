@@ -13,6 +13,8 @@ public class DialogueZone : Trigger
     {
         if (PlayerInputs.Interact.WasPressedThisFrame() && HasPlayer)
         {
+            Telemetry.Log("DialogueInteraction", dialogue.name);
+
             // If the box is typing, skip to the end of the line
             if (!box.IsFinished)
                 box.Finish();
@@ -28,11 +30,13 @@ public class DialogueZone : Trigger
 
     protected override void OnPlayerEnter()
     {
+        Telemetry.Log("DialogueStart", dialogue.name);
         SetDialogue(true);
     }
 
     protected override void OnPlayerExit()
     {
+        Telemetry.Log("DialogueLeave", dialogue.name);
         SetDialogue(false);
     }
 
@@ -56,7 +60,10 @@ public class DialogueZone : Trigger
 
         // If we are at the end of the conversation, close the box
         if (currentLine >= dialogue.lines.Length)
+        {
             box.Hide();
+            Telemetry.Log("DialogueFinishConversation", dialogue.name);
+        }
         // Set the current line
         else
         {
