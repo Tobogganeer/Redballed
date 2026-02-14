@@ -16,10 +16,18 @@ public class PlayerVisuals : MonoBehaviour
 
     // Essentially an epsilon
     const float MinVelocityForWalkingAnim = 0.01f;
+    const float TimeSlidingThreshold = 0.1f;
+
+    float timeSliding;
 
     void Update()
     {
-        VisualsUpdate();
+        if (IsSliding())
+            timeSliding += Time.deltaTime;
+        else
+            timeSliding = 0f;
+
+            VisualsUpdate();
     }
 
     public bool IsMoving()
@@ -30,10 +38,20 @@ public class PlayerVisuals : MonoBehaviour
         return tryingToMove && actuallyMoving;
     }
 
+    public bool IsSliding()
+    {
+        // See if we are trying to move, but can't
+        bool tryingToMove = playerController.PlayerInput != 0f;
+        bool actuallyMoving = Mathf.Abs(playerController.ActualVelocity.x) > MinVelocityForWalkingAnim;
+        return tryingToMove && !actuallyMoving;
+
+    }
+
     private void VisualsUpdate()
     {
         animator.SetBool(MovingHash, IsMoving());
         animator.SetBool(GroundedHash, playerController.Grounded);
+        animator.SetBool(SlideHash, timeSliding > TimeSlidingThreshold);
         // TODO: Slide (when pushing up against a wall)
 
         //if (playerController.IsDead())
