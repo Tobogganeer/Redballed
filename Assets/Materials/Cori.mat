@@ -11,7 +11,8 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 738c4b6fc2853084782ffb73ef4d5f24, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _DEBUG_SATURATION
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -53,7 +54,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DEBUG_SATURATION: 0
+    - _DEBUG_SATURATION: 1
     - _EnableExternalAlpha: 0
     - _ZWrite: 0
     m_Colors:
