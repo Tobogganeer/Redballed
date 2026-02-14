@@ -1369,7 +1369,7 @@ PrefabInstance:
     - target: {fileID: 3995880786987881207, guid: 09549191d3eda4442b3321485b1b69ba, type: 3}
       propertyPath: animator
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 371583074}
     - target: {fileID: 4073802608967933600, guid: 09549191d3eda4442b3321485b1b69ba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.5
