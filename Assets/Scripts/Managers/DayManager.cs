@@ -62,12 +62,13 @@ public class DayManager : MonoBehaviour
         }
     }
 
-    /*
     private void Start()
     {
-        StartLoadingDay(currentDay);
+        // Check if we've started in the base scene (common for testing in-editor)
+        if (SceneManager.GetActiveScene().name == baseScene)
+            // Load the current day, or day 1 if we have none selected
+            LoadDay(currentDay == Days.None ? Days.DayOne : currentDay);
     }
-    */
 
     /// <summary>
     /// Unloads the current day and loads the inter-day scene (for upgrades)
