@@ -9,6 +9,23 @@ public class DialogueZone : Trigger
 
     const int MaxLine = int.MaxValue;
 
+    private void Update()
+    {
+        if (PlayerInputs.Interact.WasPressedThisFrame() && HasPlayer)
+        {
+            // If the box is typing, skip to the end of the line
+            if (!box.IsFinished)
+                box.Finish();
+            else
+            {
+                // Show next line
+                currentLine++;
+                UpdateCurrentLine();
+            }
+                
+        }
+    }
+
     protected override void OnPlayerEnter()
     {
         SetDialogue(true);
@@ -26,10 +43,10 @@ public class DialogueZone : Trigger
         else
             currentLine = MaxLine;
 
-        SetCurrentLine();
+        UpdateCurrentLine();
     }
 
-    void SetCurrentLine()
+    void UpdateCurrentLine()
     {
         if (dialogue == null || dialogue.lines == null)
         {
@@ -42,6 +59,8 @@ public class DialogueZone : Trigger
             box.Hide();
         // Set the current line
         else
+        {
             box.SetText(dialogue.lines[currentLine]);
+        }
     }
 }

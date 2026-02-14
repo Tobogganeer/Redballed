@@ -15,6 +15,11 @@ public class DialogueBox : MonoBehaviour
     float textTimer;
     Vector2 currentTextSize;
 
+    /// <summary>
+    /// Have we written out the entire line yet?
+    /// </summary>
+    public bool IsFinished => currentCharacters >= targetText.Length;
+
     private void Start()
     {
         targetText = string.Empty;
@@ -23,7 +28,7 @@ public class DialogueBox : MonoBehaviour
     void Update()
     {
         // Typewriter effect
-        if (currentCharacters < targetText.Length)
+        if (!IsFinished)
         {
             textTimer += Time.deltaTime;
             if (textTimer > 1f / charactersPerSecond)
@@ -55,6 +60,15 @@ public class DialogueBox : MonoBehaviour
         targetText = text;
         currentCharacters = updateInstantly ? targetText.Length : 0;
         textTimer = 0f;
+    }
+
+    /// <summary>
+    /// Instantly fills in the rest of the characters
+    /// </summary>
+    public void Finish()
+    {
+        currentCharacters = targetText.Length;
+        text.text = targetText;
     }
 
     public void Hide()
