@@ -51,8 +51,17 @@ public class DialogueBox : MonoBehaviour
 
     public void SetText(string text, bool updateInstantly = false)
     {
+        background.enabled = true;
         targetText = text;
         currentCharacters = updateInstantly ? targetText.Length : 0;
         textTimer = 0f;
+    }
+
+    public void Hide()
+    {
+        targetText = string.Empty;
+        text.text = string.Empty;
+        currentCharacters = 0;
+        background.enabled = false;
     }
 }
