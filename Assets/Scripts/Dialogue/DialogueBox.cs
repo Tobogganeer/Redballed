@@ -22,7 +22,7 @@ public class DialogueBox : MonoBehaviour
 
     private void Start()
     {
-        targetText = string.Empty;
+        Hide();
     }
 
     void Update()
@@ -37,6 +37,7 @@ public class DialogueBox : MonoBehaviour
                 currentCharacters++;
                 // Update visible string and cache its size
                 text.text = targetText.Substring(0, currentCharacters);
+                text.ForceMeshUpdate();
                 currentTextSize = text.GetRenderedValues();
             }
         }
@@ -45,8 +46,9 @@ public class DialogueBox : MonoBehaviour
         if (text.text.Length > 0)
         {
             // Getting weird, massive size for the first frame - clamp it
-            if (currentTextSize.sqrMagnitude < 1000f * 1000f)
-                size = currentTextSize;
+            //if (currentTextSize.sqrMagnitude < 100f * 100f)
+            //    size = currentTextSize;
+            size = currentTextSize;
         }
 
         Vector2 finalSize = new Vector2(Mathf.Max(size.x, minSize.x), Mathf.Max(size.y, minSize.y));
@@ -69,6 +71,8 @@ public class DialogueBox : MonoBehaviour
     {
         currentCharacters = targetText.Length;
         text.text = targetText;
+        text.ForceMeshUpdate();
+        currentTextSize = text.GetRenderedValues();
     }
 
     public void Hide()
@@ -76,6 +80,9 @@ public class DialogueBox : MonoBehaviour
         targetText = string.Empty;
         text.text = string.Empty;
         currentCharacters = 0;
-        background.enabled = false;
+
+        // Make sure we don't access while closing scene/game
+        if (background != null)
+            background.enabled = false;
     }
 }
