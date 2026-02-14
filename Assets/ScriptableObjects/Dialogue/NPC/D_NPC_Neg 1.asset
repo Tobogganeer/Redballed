@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ed043f14a5cae4787ab055ccd5c38c, type: 3}
+  m_Name: D_NPC_Neg 1
+  m_EditorClassIdentifier: 
+  lines:
+  - "I only ordered this yesterday, how is it already here? You\u2019re a fast runner
+    I guess."
+  - "Oh I know, you also don\u2019t waste time collecting those red balls."
+  - Finally someone else with a brain!
+  - "Those red balls are evil and I\u2019ve been trying to tell people for ages but
+    they don\u2019t listen."
+  - "They\u2019re a big plot by the government to keep us in line, I\u2019m not falling
+    for it. That\u2019s why I stay at home so much!"
+  - That aside, thank you again for delivering this, and keep up the good work.

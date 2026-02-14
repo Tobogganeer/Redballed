@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ed043f14a5cae4787ab055ccd5c38c, type: 3}
+  m_Name: D_NPC_Pos 1
+  m_EditorClassIdentifier: 
+  lines:
+  - "Hey, I wasn\u2019t expecting this so early! You guys sure are efficient."
+  - "I bet you didn\u2019t even collect any red balls on the way here hahaha."
+  - Oh you did? Bah! I bet I could collect more than you did.
+  - "I\u2019m something of a red ball expert myself."
+  - Not to brag or anything, but I once got the daily record, it was over 80!
+  - "I don\u2019t spend as much time outside as I\u2019d like to, but believe me
+    if I was out there, you\u2019d be wondering where they all went."
+  - Anyways, thank you, and take it easy!

@@ -12,6 +12,7 @@ public class PlayerInputs : MonoBehaviour
     public static float Movement { get; private set; }
     public static InputAction Jump => actions.Jump;
     public static InputAction Dash => actions.Dash;
+    public static InputAction Interact => actions.Interact;
 
     void Awake()
     {
