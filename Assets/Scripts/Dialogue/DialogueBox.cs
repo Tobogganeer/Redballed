@@ -9,11 +9,15 @@ public class DialogueBox : MonoBehaviour
 
     [Space]
     public float charactersPerSecond = 30f;
+    public GameObject nextKeyReminder;
+    public float timeAfterFinishedToShowNextReminder = 2f;
 
     string targetText;
     int currentCharacters;
     float textTimer;
     Vector2 currentTextSize;
+
+    float timeSinceFinished;
 
     /// <summary>
     /// Have we written out the entire line yet?
@@ -40,9 +44,20 @@ public class DialogueBox : MonoBehaviour
                 text.ForceMeshUpdate();
                 currentTextSize = text.GetRenderedValues();
             }
+
+            SetNextKeyActive(false);
+            timeSinceFinished = 0f;
+        }
+        else
+        {
+            // Remind player that they can click a key to continue conversation
+            timeSinceFinished += Time.deltaTime;
+
+            if (timeSinceFinished >= timeAfterFinishedToShowNextReminder && text.text.Length > 0)
+                SetNextKeyActive(true);
         }
 
-        Vector2 size = Vector2.zero;
+            Vector2 size = Vector2.zero;
         if (text.text.Length > 0)
         {
             // Getting weird, massive size for the first frame - clamp it
@@ -62,6 +77,8 @@ public class DialogueBox : MonoBehaviour
         targetText = text;
         currentCharacters = updateInstantly ? targetText.Length : 0;
         textTimer = 0f;
+
+
     }
 
     /// <summary>
@@ -73,6 +90,7 @@ public class DialogueBox : MonoBehaviour
         text.text = targetText;
         text.ForceMeshUpdate();
         currentTextSize = text.GetRenderedValues();
+        SetNextKeyActive(false);
     }
 
     public void Hide()
@@ -84,5 +102,13 @@ public class DialogueBox : MonoBehaviour
         // Make sure we don't access while closing scene/game
         if (background != null)
             background.enabled = false;
+
+        SetNextKeyActive(false);
+    }
+
+    void SetNextKeyActive(bool active)
+    {
+        if (nextKeyReminder != null)
+            nextKeyReminder.SetActive(active);
     }
 }
