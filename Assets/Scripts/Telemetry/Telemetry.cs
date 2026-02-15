@@ -75,7 +75,8 @@ public class Telemetry : MonoBehaviour
 
     public static void Log(string type, string value = "")
     {
-        outputBuffer.Add($"{Time.time}, {type}, \"{value}\"");
+        // e.g. "{value:"hi"}" - json in quotes (to go inside CSV)
+        outputBuffer.Add($"{Time.time}, {type}, \"{{value:\"{value}\"}}\"");
     }
 
     public static void LogRaw(string type, object obj)
