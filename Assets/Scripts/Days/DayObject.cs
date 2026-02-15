@@ -15,7 +15,7 @@ public class DayObject : MonoBehaviour
 
     private void DayLoaded(Days loadedDay)
     {
-        if (days.HasFlag(loadedDay))
+        if (!days.HasFlag(loadedDay))
             Destroy(gameObject);
     }
 
