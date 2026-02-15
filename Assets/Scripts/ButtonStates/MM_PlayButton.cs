@@ -16,7 +16,7 @@ public class MM_PlayButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private List<Sprite> playButtonImages;
 
     // Anybody can modify the name of the game scene just in case if its name has updated
-    [Scene, SerializeField] private string gameSceneName;
+    //[Scene, SerializeField] private string gameSceneName;
 
     private void Awake()
     {
@@ -54,6 +54,7 @@ public class MM_PlayButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(gameSceneName);
+        //SceneManager.LoadScene(gameSceneName);
+        World.DayManager.LoadDay(Days.DayOne);
     }
 }
