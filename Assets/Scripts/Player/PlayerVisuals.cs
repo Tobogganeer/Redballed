@@ -13,6 +13,7 @@ public class PlayerVisuals : MonoBehaviour
     private readonly int SlideHash = Animator.StringToHash("slide");
     private readonly int DashHash = Animator.StringToHash("dash");
     private readonly int JumpHash = Animator.StringToHash("jump");
+    private readonly int DownwardsHash = Animator.StringToHash("downwards");
 
     // Essentially an epsilon
     const float MinVelocityForWalkingAnim = 0.01f;
@@ -52,6 +53,7 @@ public class PlayerVisuals : MonoBehaviour
         animator.SetBool(MovingHash, IsMoving());
         animator.SetBool(GroundedHash, playerController.Grounded);
         animator.SetBool(SlideHash, timeSliding > TimeSlidingThreshold);
+        animator.SetBool(DownwardsHash, playerController.RB.linearVelocityY < 0f);
         // TODO: Slide (when pushing up against a wall)
 
         //if (playerController.IsDead())
