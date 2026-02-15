@@ -30,7 +30,7 @@ public class Telemetry : MonoBehaviour
         outputPath = Path.Combine(Application.persistentDataPath, $"telemetry_{sessionID}.txt");
 
         if (!File.Exists(outputPath))
-            File.WriteAllText(outputPath, "Time, Type, Value");
+            File.WriteAllText(outputPath, "Time, Type, Value\n");
 
         outputBuffer.Clear();
 

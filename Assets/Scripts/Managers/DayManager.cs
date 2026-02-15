@@ -75,6 +75,8 @@ public class DayManager : MonoBehaviour
     /// </summary>
     public void EndDay()
     {
+        Telemetry.Log("DayEnded", CurrentDay.ToString());
+        Telemetry.Log("RedBallsTotal", World.CurrentRedBalls.ToString());
         StartCoroutine(EndDayAndLoadInterdayScene());
     }
 
