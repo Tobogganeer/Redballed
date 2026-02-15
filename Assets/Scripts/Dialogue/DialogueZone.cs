@@ -62,6 +62,7 @@ public class DialogueZone : Trigger
         if (currentLine >= dialogue.lines.Length)
         {
             box.Hide();
+            // TODO: Makes sure the box is visible before logging to telemetry
             Telemetry.Log("DialogueFinishConversation", dialogue.name);
         }
         // Set the current line
