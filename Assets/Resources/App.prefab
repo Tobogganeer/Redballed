@@ -334,7 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   log: 1
   logInEditor: 1
-  playerStatesPerSecond: 5
+  playerStatesPerSecond: 10
 --- !u!1 &5367811422728072156
 GameObject:
   m_ObjectHideFlags: 0
