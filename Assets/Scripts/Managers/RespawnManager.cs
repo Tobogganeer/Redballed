@@ -14,3 +14,18 @@ public class RespawnManager : MonoBehaviour
         
     }
 }
+
+/*
+
+=== After Die() called:
+Reset movement properties (velocity, facing, etc)
+- Add a facing to each checkpoint? not important tho
+Disable visuals and controls
+Make camera account for being dead
+Wait a few seconds then respawn character
+- Enable visuals
+- Reset dead bool
+- Move camera back (snap? move fast? fade to black?)
+
+
+*/
