@@ -582,6 +582,7 @@ public class PlayerController : MonoBehaviour
         public bool holdingJump;
         public Vector2 currentColliderSize;
         public Vector2 currentColliderOffset;
+        public bool alive;
 
         public Snapshot(PlayerController player)
         {
@@ -595,6 +596,7 @@ public class PlayerController : MonoBehaviour
             holdingJump = PlayerInputs.Jump.IsPressed();
             currentColliderSize = player.collider.size;
             currentColliderOffset = player.collider.offset;
+            alive = !Player.IsDead;
         }
     }
 

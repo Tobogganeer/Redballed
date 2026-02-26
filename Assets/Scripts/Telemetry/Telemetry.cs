@@ -83,10 +83,36 @@ public class Telemetry : MonoBehaviour
         outputBuffer.Add($"{Time.time}, {type}, \"{JsonUtility.ToJson(obj)}\"");
     }
 
-    PlayerController.Snapshot GetLatestSnapshot()
+    PlayerTelemetrySnapshot GetLatestSnapshot()
     {
         // This is stupid. Why is it a queue?
         //int numSnapshots = Player.Movement.Snapshots.Count;
-        return Player.Movement.Snapshots.Last();
+        return new PlayerTelemetrySnapshot(Player.Movement.Snapshots.Last());
+    }
+
+    [System.Serializable]
+    struct PlayerTelemetrySnapshot
+    {
+        public Vector2 position;
+        public Vector2 velocity;
+        public float xInput;
+        public bool alive;
+        public bool holdingJump;
+        //public bool isInCoyoteTime;
+        //public bool grounded;
+        //public bool jumpIsBuffered;
+        //public float time;
+        //public bool holdingJump;
+        //public Vector2 currentColliderSize;
+        //public Vector2 currentColliderOffset;
+
+        public PlayerTelemetrySnapshot(PlayerController.Snapshot snapshot)
+        {
+            position = snapshot.position;
+            velocity = snapshot.velocity;
+            xInput = snapshot.xInput;
+            alive = snapshot.alive;
+            holdingJump = snapshot.holdingJump;
+        }
     }
 }

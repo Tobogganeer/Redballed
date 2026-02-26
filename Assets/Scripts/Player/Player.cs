@@ -1,3 +1,4 @@
+using Tobo.Attributes;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -11,10 +12,12 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerController movement;
     [SerializeField] private PlayerVisuals visuals;
     [SerializeField] private PlayerUpgrades upgrades;
+    [SerializeField, ReadOnly] private bool isDead;
 
     public static PlayerController Movement => instance.movement;
     public static PlayerVisuals Visuals => instance.visuals;
     public static PlayerUpgrades Upgrades => instance.upgrades;
     public static Vector3 Position => instance.transform.position; // TODO: rb.position?
     public static bool Exists => instance != null;
+    public static bool IsDead => !instance.isDead;
 }
