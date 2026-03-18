@@ -15,6 +15,14 @@ public enum Days
     EndingDay = 1 << 3
 }
 
+[Flags]
+public enum Endings
+{
+    None = 0,
+    Ending1 = 1,
+    Ending2 = 2
+}
+
 public class DayManager : MonoBehaviour
 {
     [SerializeField, Scene] private List<string> baseScenes;
@@ -22,6 +30,7 @@ public class DayManager : MonoBehaviour
     [SerializeField, Scene] private string interDayScene; // Upgrades
     [SerializeField] private List<DayScene> dayScenes;
     [SerializeField] private static Days currentDay = Days.DayOne;
+    [SerializeField] private static Endings currentEnding = Endings.None;
 
     private static int sceneNumber = 0;
 
@@ -170,6 +179,7 @@ public class DayManager : MonoBehaviour
         // Otherwise, the current day is the ending day
         else
         {
+            SetEnding();
             yield return SceneManager.LoadSceneAsync(endingScene, LoadSceneMode.Single); // Load as ending scene
         }
 
@@ -190,6 +200,31 @@ public class DayManager : MonoBehaviour
     {
         sceneNumber = 0;
         currentDay = Days.None;
+        currentEnding = Endings.None;
+    }
+
+    public static void SetEnding()
+    {
+        int randomizedEnding = UnityEngine.Random.Range(0, 2);
+
+        switch (randomizedEnding)
+        {
+            case 0:
+                currentEnding = Endings.Ending1;
+                break;
+
+            case 1:
+                currentEnding = Endings.Ending2;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public static Endings GetCurrentEnding()
+    {
+        return currentEnding;
     }
 
     /*
