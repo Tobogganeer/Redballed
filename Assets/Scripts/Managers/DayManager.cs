@@ -17,10 +17,13 @@ public enum Days
 
 public class DayManager : MonoBehaviour
 {
-    [SerializeField, Scene] private string baseScene;
+    [SerializeField, Scene] private List<string> baseScenes;
+    [SerializeField, Scene] private string endingScene;
     [SerializeField, Scene] private string interDayScene; // Upgrades
     [SerializeField] private List<DayScene> dayScenes;
-    [SerializeField] private Days currentDay = Days.DayOne;
+    [SerializeField] private static Days currentDay = Days.DayOne;
+
+    private static int sceneNumber = 0;
 
     Dictionary<Days, string> days;
     Scene loadedDay;
@@ -65,7 +68,7 @@ public class DayManager : MonoBehaviour
     private void Start()
     {
         // Check if we've started in the base scene (common for testing in-editor)
-        if (SceneManager.GetActiveScene().name == baseScene)
+        if (SceneManager.GetActiveScene().name == baseScenes[sceneNumber])
             // Load the current day, or day 1 if we have none selected
             LoadDay(currentDay == Days.None ? Days.DayOne : currentDay);
     }
@@ -148,22 +151,45 @@ public class DayManager : MonoBehaviour
         //if (loadedBaseScene.isLoaded)
         //    yield return SceneManager.UnloadSceneAsync(loadedBaseScene);
 
+        currentDay = day;
+
+        if (currentDay != Days.DayOne && currentDay != Days.EndingDay) ++sceneNumber;
+
+        Debug.Log("Scene Number: " + sceneNumber);
+
         // Get callback to store base scene once loaded
         //SceneManager.sceneLoaded += BaseSceneLoaded;
         // Load base scene, which unloads other scenes (including inter-day scene)
-        yield return SceneManager.LoadSceneAsync(baseScene, LoadSceneMode.Single); // Load as main scene
+
+        // If the current day isn't an ending day
+        if (currentDay != Days.EndingDay)
+        {
+            yield return SceneManager.LoadSceneAsync(baseScenes[sceneNumber], LoadSceneMode.Single); // Load as main scene
+        }
+
+        // Otherwise, the current day is the ending day
+        else
+        {
+            yield return SceneManager.LoadSceneAsync(endingScene, LoadSceneMode.Single); // Load as ending scene
+        }
+
         //SceneManager.sceneLoaded -= BaseSceneLoaded;
 
         yield return SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
 
         //currentlyLoadedDay = scene;
         loadedDay = SceneManager.GetSceneByName(scene);
-        currentDay = day;
 
         Loading = false;
         LoadingScreen.Disable();
 
         OnDayLoaded?.Invoke(day);
+    }
+
+    public static void ResetDayManager()
+    {
+        sceneNumber = 0;
+        currentDay = Days.None;
     }
 
     /*

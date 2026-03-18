@@ -281,7 +281,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7aa648133696a4448643539e10fd16a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseScene: GameScene
+  baseScenes:
+  - GameScene1
+  - GameScene2
+  - GameScene3
+  endingScene: EndingScene
   interDayScene: UpgradeScene
   dayScenes:
   - day: 1
