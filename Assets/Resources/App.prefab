@@ -285,7 +285,7 @@ MonoBehaviour:
   - GameScene1
   - GameScene2
   - GameScene3
-  endingScene: EndingScene
+  - EndingScene
   interDayScene: UpgradeScene
   dayScenes:
   - day: 1
@@ -296,7 +296,6 @@ MonoBehaviour:
     scene: Day3_Additive
   - day: 8
     scene: Ending_Additive
-  currentDay: 0
 --- !u!114 &632364668807301018
 MonoBehaviour:
   m_ObjectHideFlags: 0

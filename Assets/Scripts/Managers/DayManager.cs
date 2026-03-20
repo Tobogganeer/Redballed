@@ -26,7 +26,6 @@ public enum Endings
 public class DayManager : MonoBehaviour
 {
     [SerializeField, Scene] private List<string> baseScenes;
-    [SerializeField, Scene] private string endingScene;
     [SerializeField, Scene] private string interDayScene; // Upgrades
     [SerializeField] private List<DayScene> dayScenes;
     [SerializeField] private static Days currentDay = Days.DayOne;
@@ -162,7 +161,12 @@ public class DayManager : MonoBehaviour
 
         currentDay = day;
 
-        if (currentDay != Days.DayOne && currentDay != Days.EndingDay) ++sceneNumber;
+        // Update scene number based on current day to load the correct scene
+        if (currentDay == Days.DayOne && sceneNumber != 0) sceneNumber = 0;
+        else if (currentDay == Days.DayTwo && sceneNumber != 1) sceneNumber = 1;
+        else if (currentDay == Days.DayThree && sceneNumber != 2) sceneNumber = 2;
+        else if (currentDay == Days.EndingDay && sceneNumber != 3) { sceneNumber = 3; SetEnding(); }
+        else if (currentDay == Days.None && sceneNumber != 0) sceneNumber = 0;
 
         Debug.Log("Scene Number: " + sceneNumber);
 
@@ -170,18 +174,7 @@ public class DayManager : MonoBehaviour
         //SceneManager.sceneLoaded += BaseSceneLoaded;
         // Load base scene, which unloads other scenes (including inter-day scene)
 
-        // If the current day isn't an ending day
-        if (currentDay != Days.EndingDay)
-        {
-            yield return SceneManager.LoadSceneAsync(baseScenes[sceneNumber], LoadSceneMode.Single); // Load as main scene
-        }
-
-        // Otherwise, the current day is the ending day
-        else
-        {
-            SetEnding();
-            yield return SceneManager.LoadSceneAsync(endingScene, LoadSceneMode.Single); // Load as ending scene
-        }
+        yield return SceneManager.LoadSceneAsync(baseScenes[sceneNumber], LoadSceneMode.Single); // Load as main scene
 
         //SceneManager.sceneLoaded -= BaseSceneLoaded;
 
