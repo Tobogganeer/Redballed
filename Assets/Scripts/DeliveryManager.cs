@@ -12,8 +12,8 @@ public class DeliveryManager : MonoBehaviour
 
     //public GameObject deliveryPointHighlight;
 
-    bool hasPackage;
-    bool deliveredPackage;
+    //bool hasPackage;
+    //bool deliveredPackage;
 
     //public static bool HasPackage => instance.hasPackage;
     //public static bool DeliveredPackage => instance.deliveredPackage;
@@ -21,9 +21,11 @@ public class DeliveryManager : MonoBehaviour
     public static bool HasPackage = false;
     public static bool DeliveredPackage = false;
 
-    private static int PackagesDelivered = 0;
-    public static int PackagesToDeliver = 1;
+    [Header("Package Delivery Parameters")]
+    private int PackagesDelivered = 0;
+    [SerializeField] private int PackagesToDeliver = 1;
 
+    [Header("Load Time")]
     [SerializeField] private float timeToShowEndDayScreen = 1.0f;
 
     //public static bool HasPackage => instance.hasPackage;
@@ -41,14 +43,6 @@ public class DeliveryManager : MonoBehaviour
 
             DeliveredPackage = false; // Set back to false
         }
-    }
-
-    private void ResetDeliveryManager()
-    {
-        if (HasPackage) HasPackage = false;
-        if (DeliveredPackage) DeliveredPackage = false;
-
-        PackagesDelivered = 0;
     }
 
     IEnumerator WaitForEndDayToShow()
