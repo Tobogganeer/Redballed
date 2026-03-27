@@ -614,7 +614,7 @@ PrefabInstance:
     - target: {fileID: 646997029268933065, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 3417126806434788764, guid: 30a8473b18496c847b4178d5651ec778, type: 3}
+      objectReference: {fileID: 3417126806434788764, guid: a9525151217e3e04caabc6a73396cf1e, type: 3}
     - target: {fileID: 2485385371532683082, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_text
       value: Dash
@@ -1319,7 +1319,7 @@ PrefabInstance:
     - target: {fileID: 646997029268933065, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 3417126806434788764, guid: 30a8473b18496c847b4178d5651ec778, type: 3}
+      objectReference: {fileID: 3417126806434788764, guid: a9525151217e3e04caabc6a73396cf1e, type: 3}
     - target: {fileID: 646997029268933065, guid: 6b3fa0fe8c0a70849990ad147d398535, type: 3}
       propertyPath: m_Color.b
       value: 0.3679245
@@ -1794,6 +1794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30d2b806004322488af5862b25627d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextDayText: {fileID: 0}
 --- !u!1 &1385731528
 GameObject:
   m_ObjectHideFlags: 0
