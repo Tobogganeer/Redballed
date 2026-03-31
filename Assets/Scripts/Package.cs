@@ -24,10 +24,11 @@ public class Package : MonoBehaviour
     void Update()
     {
         // Check if player is in the package trigger, doesn't have the package yet and the interaction key is pressed
-        if (inPackageTrigger && PlayerInputs.Interact.IsPressed() && !DeliveryManager.HasPackage)
+        if (!deliveryDoorObj.GetInDoorTrigger() && inPackageTrigger && PlayerInputs.Interact.IsPressed())
         {
             // Activate the door highlight
-            if (deliveryDoorObj != null) deliveryDoorObj.SetDoorHighlightActive(true);
+            if (deliveryDoorObj != null) deliveryDoorObj.SetDoorHighlightActive(true, gameObject);
+            if (keyReminder != null) keyReminder.SetActive(false);
 
             // Attach the package onto the player
             if (player != null)
@@ -41,10 +42,10 @@ public class Package : MonoBehaviour
         }
 
         // Otherwise, check if player is in the door trigger with the package and the interaction key is pressed
-        else if (deliveryDoor.GetComponent<DeliveryDoor>().GetInDoorTrigger() && PlayerInputs.Interact.IsPressed())
+        else if (deliveryDoorObj.GetInDoorTrigger() && PlayerInputs.Interact.IsPressed())
         {
             // Hide the door highlight object
-            if (deliveryDoorObj != null) deliveryDoorObj.SetDoorHighlightActive(false);
+            if (deliveryDoorObj != null) deliveryDoorObj.SetDoorHighlightActive(false, null);
 
             // Destroy the package
             gameObject.transform.SetParent(null);
@@ -60,7 +61,7 @@ public class Package : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && !inPackageTrigger)
+        if (collision.gameObject.CompareTag("Player") && !inPackageTrigger && !DeliveryManager.HasPackage)
         {
             player = collision.gameObject;
 

@@ -6,6 +6,8 @@ public class DeliveryDoor : MonoBehaviour
     [SerializeField] private GameObject doorHighlight;
     [SerializeField] private GameObject keyReminder;
 
+    [SerializeField] private GameObject pickedUpPackage;
+
     private bool inDoorTrigger = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,7 +25,8 @@ public class DeliveryDoor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && !inDoorTrigger && DeliveryManager.HasPackage)
+        if (collision.gameObject.CompareTag("Player") && !inDoorTrigger && 
+            DeliveryManager.HasPackage && pickedUpPackage != null)
         {
             if (keyReminder != null) keyReminder.SetActive(true);
             inDoorTrigger = true;
@@ -41,10 +44,11 @@ public class DeliveryDoor : MonoBehaviour
         }
     }
 
-    public void SetDoorHighlightActive(bool active)
+    public void SetDoorHighlightActive(bool active, GameObject package)
     {
         if (doorHighlight != null) doorHighlight.SetActive(active);
         if (!active && keyReminder != null) keyReminder.SetActive(active);
+        pickedUpPackage = package;
     }
 
     public bool GetInDoorTrigger()
