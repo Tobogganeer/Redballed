@@ -111,4 +111,10 @@ public class DialogueBox : MonoBehaviour
         if (nextKeyReminder != null)
             nextKeyReminder.SetActive(active);
     }
+
+    public bool IsVisible()
+    {
+        return targetText != string.Empty && text.text != string.Empty && currentCharacters != 0 &&
+            background != null && background.enabled;
+    }
 }

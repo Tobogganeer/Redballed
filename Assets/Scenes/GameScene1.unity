@@ -1687,6 +1687,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5746544099406710312, guid: 20dd2aaee6c699546abcf4525af9e816, type: 3}
   m_PrefabInstance: {fileID: 420374654}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &186774179 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1231041199594304372, guid: 0121f710cd875274782d250976cc28d0, type: 3}
+  m_PrefabInstance: {fileID: 1575312845}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &191504042
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6342,6 +6347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 11400000, guid: 7087aa4e7574193498581dac33649db0, type: 2}
   box: {fileID: 558406811}
+  shouldPopUp: 0
 --- !u!4 &602413405
 Transform:
   m_ObjectHideFlags: 0
@@ -104587,6 +104593,10 @@ PrefabInstance:
       propertyPath: deliveryDoor
       value: 
       objectReference: {fileID: 114696787}
+    - target: {fileID: 7255137218573356074, guid: 02c932e37a8386f46b8b398e5f570dc0, type: 3}
+      propertyPath: dialogueZone
+      value: 
+      objectReference: {fileID: 186774179}
     - target: {fileID: 7255137218573356074, guid: 02c932e37a8386f46b8b398e5f570dc0, type: 3}
       propertyPath: doorHighlight
       value: 

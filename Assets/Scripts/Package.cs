@@ -4,8 +4,10 @@ public class Package : MonoBehaviour
 {
     [SerializeField] private GameObject deliveryDoor;
     [SerializeField] private GameObject keyReminder;
+    [SerializeField] private GameObject dialogueZone;
 
     private DeliveryDoor deliveryDoorObj;
+    private DialogueZone dialogueZoneObj;
 
     private bool inPackageTrigger = false;
 
@@ -16,8 +18,14 @@ public class Package : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        deliveryDoorObj = deliveryDoor.GetComponent<DeliveryDoor>();
+        if (deliveryDoor != null) deliveryDoorObj = deliveryDoor.GetComponent<DeliveryDoor>();
         if (keyReminder != null) keyReminder.SetActive(false);
+
+        if (dialogueZone != null)
+        {
+            dialogueZoneObj = dialogueZone.GetComponent<DialogueZone>();
+            if (dialogueZoneObj != null) dialogueZoneObj.AssignPackageToTriggerDialogue(gameObject);
+        }
     }
 
     // Update is called once per frame

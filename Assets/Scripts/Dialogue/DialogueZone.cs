@@ -9,9 +9,11 @@ public class DialogueZone : Trigger
 
     const int MaxLine = int.MaxValue;
 
+    [SerializeField] private GameObject packageRef;
+
     private void Update()
     {
-        if (PlayerInputs.Interact.WasPressedThisFrame() && HasPlayer)
+        if (PlayerInputs.Interact.WasPressedThisFrame() && HasPlayer && box.IsVisible())
         {
             Telemetry.Log("DialogueInteraction", dialogue.name);
 
@@ -26,27 +28,35 @@ public class DialogueZone : Trigger
             }
                 
         }
+
+        if (box.IsVisible() && !DeliveryManager.HasPackage) box.Hide();
+    }
+
+    public void AssignPackageToTriggerDialogue(GameObject package)
+    {
+        packageRef = package;
     }
 
     protected override void OnPlayerEnter()
     {
-        Telemetry.Log("DialogueStart", dialogue.name);
-        SetDialogue(true);
+        if (packageRef != null && DeliveryManager.HasPackage && !box.IsVisible())
+        {
+            Telemetry.Log("DialogueStart", dialogue.name);
+            SetDialogue();
+        }
     }
 
     protected override void OnPlayerExit()
     {
-        Telemetry.Log("DialogueLeave", dialogue.name);
-        SetDialogue(false);
+        if (packageRef != null && box.IsVisible())
+        {
+            Telemetry.Log("DialogueLeave", dialogue.name);
+            box.Hide();
+        }
     }
 
-    public void SetDialogue(bool visible)
+    public void SetDialogue()
     {
-        if (visible)
-            currentLine = 0;
-        else
-            currentLine = MaxLine;
-
         UpdateCurrentLine();
     }
 
